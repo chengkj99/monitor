@@ -80,8 +80,8 @@
             <!--<router-link class="button is-small" to="/ModalHistory">查看历史</router-link>-->
 
             <a class="button is-small" @click="historyHandle">查看历史</a>
-            <a class="button is-small">详情</a>
-            <router-link class="button is-small" to="/test">黑名单</router-link>
+            <a class="button is-small" @click="detailsHandle" >详情</a>
+            <router-link class="button is-small" to="/Blacklist">黑名单</router-link>
             <a class="button is-small">恢复</a>
           </td>
         </tr>
@@ -91,6 +91,9 @@
       <div v-show="modalShow">
         <ModalHistory message="chengkangjian"></ModalHistory>
       </div>
+      <div v-show="modalDetailsShow">
+        <ModalDetails></ModalDetails>
+      </div>
     </div>
 
 </template>
@@ -98,12 +101,13 @@
 
 <script>
 import ModalHistory from './tpl/ModalHistory'
-//import { modalChange } from '../store/action'
+import ModalDetails from './tpl/ModalDetails'
   export default {
   data () {
     return {
       name: 'alarm-node',
-      modalShow:'',
+      modalShow: false,
+      modalDetailsShow: false,
       listData:[ 
       {
           Id: 9,
@@ -153,24 +157,28 @@ import ModalHistory from './tpl/ModalHistory'
       ]
     }
   },
-  computer: {
+  computed: {
     modalShow () {
-        return this.$store.state.modalShow
-      }
+      return this.$store.state.modalShow
+    },
+    modalDetailsShow () {
+      return this.$store.state.modalDetailsShow
+    }
   },
   methods: {
    queryHandle () {
      alert('query function!')
    },
    historyHandle () {
-    console.log('history')
-    this.$store.dispatch('MODAL_CHANGE_AC')
-
-    //this.modalShow=true;
+     this.$store.dispatch('MODAL_CHANGE_AC')
+   },
+   detailsHandle () {
+     this.$store.dispatch('DETAILS_CHANGE_AC')
    }
    },
    components:{
-     ModalHistory
+     ModalHistory,
+     ModalDetails
    }
 }
 </script>

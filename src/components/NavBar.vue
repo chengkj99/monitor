@@ -26,7 +26,7 @@
             <router-link to="/UserAttendance">值班管理 </router-link>
           </li>
           <li>
-            <router-link to="/test">黑名单管理</router-link>
+            <router-link to="/Blacklist">黑名单管理</router-link>
           </li>
           
           <li>       

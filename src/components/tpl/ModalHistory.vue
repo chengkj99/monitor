@@ -1,7 +1,7 @@
 <template>
-    <div id="modal-history">
-      <div class="container" id="table-box" :style=" tableBoxStyle "> 
-        <a @click="modalChange" href="javascript:void(0)">关闭</a>
+    <div id="modal-history" @click.capture="modalChange" >
+      <div class="container"  id="table-box" :style=" tableBoxStyle "> 
+        
         <table class="table">
           <thead>
           <tr>
@@ -35,17 +35,13 @@
 
 
       </div>
-        <!--<div>this is {{getMessage()}} body</div>-->
     </div>
 </template>
 
 
 <script>
-//import { modalChange } from '../../store/action'
-
     export default{
        props:['message'],
-
        data(){
          return{
          tableBoxStyle:{
@@ -53,6 +49,272 @@
          },
           details:[
           {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
+            id: 1,
+            Title: "123",
+            SystemName: "123",
+            Endpoint: "123",
+            SubEndpoint: "",
+            Metric: "123",
+            Value: "123",
+            BaseValue: "123",
+            EventType: 1,
+            Level: 1,
+            ReportTime: "2016-11-03 17:17:29",
+            AlarmContent: "2"
+          },
+                    {
             id: 1,
             Title: "123",
             SystemName: "123",
@@ -111,18 +373,17 @@
       height: 95%;
       overflow: auto;
       margin: auto;
+      border-radius: 10px;
 
       table{
         background-color: black;
         color: white;
         font-weight: bold;
-        border-radius: 10px;
         box-shadow: 0px 0px 20px black;
         margin: 0px;
 
         tr{
           &:hover{
-            /*background: none;*/
             color:black;
             cursor: pointer;
           }
@@ -131,8 +392,6 @@
 
           &:hover{
             background: none;
-            /*color:black;*/
-
           }
         }
         td{

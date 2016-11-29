@@ -8,12 +8,8 @@
     </div>
 </template>
 <style lang="scss">
- 
   #main-node{
     padding-top: 50px;
-    /*margin-left: 200px;*/
   }
-  
-  
 </style>
 

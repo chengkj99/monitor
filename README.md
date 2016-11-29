@@ -24,3 +24,4 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 [ vue-resource ](https://github.com/pagekit/vue-resource)
 [ vue-router ](https://github.com/vuejs/vue-router)
 [ webpack ](http://webpack.github.io/)
+# monitor

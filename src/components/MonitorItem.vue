@@ -2,6 +2,6 @@
 
 <template>
     <div>
-        <div>this is MonitorItem.vue body</div>
+        <div>this is MonitorItem body</div>
     </div>
 </template>

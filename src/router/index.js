@@ -15,6 +15,7 @@ import MonitorItem from '../components/MonitorItem'
 import UserAttendance from '../components/UserAttendance'
 import UserGroup from '../components/UserGroup'
 import UserMonitorRelation from '../components/UserMonitorRelation'
+import Blacklist from '../components/Blacklist'
 
 import ModalHistory from '../components/tpl/ModalHistory'
 
@@ -66,9 +67,9 @@ const routes = [
     component: test
   },
   {
-    path: '/ModalHistory',
-    name: ModalHistory,
-    component: ModalHistory
+    path: '/Blacklist',
+    name: Blacklist,
+    component: Blacklist
   }
 ]
 
