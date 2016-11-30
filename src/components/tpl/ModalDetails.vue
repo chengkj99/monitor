@@ -2,29 +2,6 @@
     <div id="modal-details" @click.self="modalChange" >
       <div class="container"  id="table-box" :style=" tableBoxStyle ">
 
-<!--        <th>标题</th>
-        <th>告警来源系统</th>
-        <th>告警节点</th>
-        <th>告警子节点</th>
-        <th>监控项</th>
-        <th>值</th>
-        <th>阀值</th>
-        <th>告警等级</th>
-        <th>告警时间</th>
-        <th>告警内容</th>-->
-        
-        <!--
-                  <td id="obj.id">{{ obj.Title }}</td>
-            <td>{{ obj.SystemName }}</td>
-            <td>{{ obj.Endpoint }}</td>
-            <td>{{ obj.SubEndpoint }}</td>
-            <td>{{ obj.Metric }}</td>
-            <td>{{ obj.Value }}</td>
-            <td>{{ obj.BaseValue }}</td>
-            <td>{{ obj.Level }}</td>
-            <td>{{ obj.ReportTime }}</td>
-            <td>{{ obj.AlarmContent }}</td>
-        -->
         <h1 class="title">告警详情</h1>
 
         <template v-for=" obj in details">

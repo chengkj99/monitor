@@ -1,5 +1,5 @@
 <template>
-    <div id="modal-history" @click.capture="modalChange" >
+    <div id="modal-history" @click.self="modalChange" >
       <div class="container"  id="table-box" :style=" tableBoxStyle "> 
         
         <table class="table">
@@ -19,7 +19,7 @@
           </thead>
           <tbody>
           <tr v-for="obj in details">
-            <td id="obj.id">{{ obj.Title }}</td>
+            <td>{{ obj.Title }}</td>
             <td>{{ obj.SystemName }}</td>
             <td>{{ obj.Endpoint }}</td>
             <td>{{ obj.SubEndpoint }}</td>

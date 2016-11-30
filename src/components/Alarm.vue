@@ -54,18 +54,6 @@
         </thead>
         <tbody>
         <tr v-for="obj in listData">
-          <!--○ Id: 1,／不显示-->
-          <!--○ Title: "123",-->
-          <!--○ SystemName: "123", 告警来源系统-->
-          <!--○ Endpoint: "123", 告警节点-->
-          <!--○ SubEndpoint: "",告警子节点-->
-          <!--○ Metric: "123", 监控项-->
-          <!--○ Value: "123", 值-->
-          <!--○ BaseValue: "123", 阈值-->
-          <!--○ EventType: 1, 不显示-->
-          <!--○ Level: 1, 告警级别-->
-          <!--○ ReportTime: "2016-11-03 17:17:29", 上报时间-->
-          <!--○ AlarmContent: "2"  告警内容 (历史或详情显示)-->
           <td>{{ obj.Title }}</td>
           <td>{{ obj.SystemName }}</td>
           <td>{{ obj.Endpoint }}</td>
@@ -77,12 +65,10 @@
           <td>{{ obj.LastReportTime }}</td>
           <td>{{ obj.FirstReportTime }}</td>
           <td>
-            <!--<router-link class="button is-small" to="/ModalHistory">查看历史</router-link>-->
-
-            <a class="button is-small" @click="historyHandle">查看历史</a>
-            <a class="button is-small" @click="detailsHandle" >详情</a>
+            <a class="button is-small" @click="historyHandle" :data-id="obj.Id">查看历史</a>
+            <a class="button is-small" @click="detailsHandle" :data-id="obj.Id">详情</a>
             <router-link class="button is-small" to="/Blacklist">黑名单</router-link>
-            <a class="button is-small">恢复</a>
+            <a class="button is-small" :data-id="obj.Id">恢复</a>
           </td>
         </tr>
         </tbody>
@@ -125,7 +111,7 @@ import ModalDetails from './tpl/ModalDetails'
           LastReportTime: "2016-11-24 10:42:04"
       },
       {
-          Id: 9,
+          Id: 8,
           Title: "title",
           AlarmId: "system_192.168.0.1_memory_used",
           SystemName: "system",
@@ -140,7 +126,7 @@ import ModalDetails from './tpl/ModalDetails'
           LastReportTime: "2016-11-24 10:42:04"
       },
       {
-          Id: 9,
+          Id: 7,
           Title: "title",
           AlarmId: "system_192.168.0.1_memory_used",
           SystemName: "system",
@@ -169,7 +155,8 @@ import ModalDetails from './tpl/ModalDetails'
    queryHandle () {
      alert('query function!')
    },
-   historyHandle () {
+   historyHandle (e) {
+   console.log(e.target.dataset.id)
      this.$store.dispatch('MODAL_CHANGE_AC')
    },
    detailsHandle () {
@@ -239,7 +226,7 @@ import ModalDetails from './tpl/ModalDetails'
     }
 
     .table{
-
+      box-shadow: 0px 0px 5px #ccc;
       margin-top: 30px;
 
       tr{

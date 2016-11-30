@@ -17,8 +17,6 @@ import UserGroup from '../components/UserGroup'
 import UserMonitorRelation from '../components/UserMonitorRelation'
 import Blacklist from '../components/Blacklist'
 
-import ModalHistory from '../components/tpl/ModalHistory'
-
 Vue.use(Router)
 
 const routes = [

@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const state = {
   modalShow: false,
-  modalDetailsShow: false
+  modalDetailsShow: false,
+  modalRenameShow:false
 }
 
 const actions = {
@@ -15,6 +16,10 @@ const actions = {
   },
   DETAILS_CHANGE_AC({ commit }) {
     commit('DETAILS_CHANGE')
+    return Promise.resolve()
+  },
+  RENAME_CHANGE_AC({ commit }) {
+    commit('RENAME_CHANGE')
     return Promise.resolve()
   }
 
@@ -34,6 +39,13 @@ const mutations = {
       state.modalDetailsShow=true;
     }else{
       state.modalDetailsShow=false;
+    }
+  },
+  RENAME_CHANGE (state) {
+    if(state.modalRenameShow==false){
+      state.modalRenameShow=true;
+    }else{
+      state.modalRenameShow=false;
     }
   }
   
