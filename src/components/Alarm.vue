@@ -73,6 +73,7 @@
         </tr>
         </tbody>
       </table>
+      <VuePage :data-num="pagedata.length" :each="eachPageSize" :visiblepage="visiblepage" @change-page="changePage"></VuePage>
 
       <div v-show="modalShow">
         <ModalHistory message="chengkangjian"></ModalHistory>
@@ -88,10 +89,20 @@
 <script>
 import ModalHistory from './tpl/ModalHistory'
 import ModalDetails from './tpl/ModalDetails'
+import VuePage from './tpl/VuePage'
   export default {
   data () {
     return {
       name: 'alarm-node',
+      
+      cur: 0, 
+      dataNum: 0, 
+      eachPageSize: 3, 
+      visiblepage: 5, 
+      pagedata: [1, 2, 3, 4, 5, 6, 7, 8, 9], 
+      curpage: 1,
+        
+      
       modalShow: false,
       modalDetailsShow: false,
       listData:[ 
@@ -101,7 +112,7 @@ import ModalDetails from './tpl/ModalDetails'
           AlarmId: "system_192.168.0.1_memory_used",
           SystemName: "system",
           Endpoint: "192.168.0.1",
-          SubEndpoint: "",
+          SubEndpoint: "192",
           Metric: "memory_used",
           Value: "0.92",
           BaseValue: "0.8",
@@ -116,7 +127,7 @@ import ModalDetails from './tpl/ModalDetails'
           AlarmId: "system_192.168.0.1_memory_used",
           SystemName: "system",
           Endpoint: "192.168.0.1",
-          SubEndpoint: "",
+          SubEndpoint: "192",
           Metric: "memory_used",
           Value: "0.92",
           BaseValue: "0.8",
@@ -131,7 +142,7 @@ import ModalDetails from './tpl/ModalDetails'
           AlarmId: "system_192.168.0.1_memory_used",
           SystemName: "system",
           Endpoint: "192.168.0.1",
-          SubEndpoint: "",
+          SubEndpoint: "192",
           Metric: "memory_used",
           Value: "0.92",
           BaseValue: "0.8",
@@ -152,20 +163,26 @@ import ModalDetails from './tpl/ModalDetails'
     }
   },
   methods: {
-   queryHandle () {
-     alert('query function!')
-   },
-   historyHandle (e) {
-   console.log(e.target.dataset.id)
-     this.$store.dispatch('MODAL_CHANGE_AC')
-   },
-   detailsHandle () {
-     this.$store.dispatch('DETAILS_CHANGE_AC')
-   }
-   },
-   components:{
-     ModalHistory,
-     ModalDetails
+    queryHandle () {
+      alert('query function!')
+    },
+    historyHandle (e) {     
+      console.log(e.target.dataset.id)
+      this.$store.dispatch('MODAL_CHANGE_AC')
+    },
+    detailsHandle () {
+      this.$store.dispatch('DETAILS_CHANGE_AC')
+    },
+    changePage (cur) {
+        this.curpage = cur
+        alert(cur)
+    }
+   
+  },
+  components:{
+    ModalHistory,
+    ModalDetails,     
+    VuePage
    }
 }
 </script>

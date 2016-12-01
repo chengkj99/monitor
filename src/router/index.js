@@ -16,6 +16,7 @@ import UserAttendance from '../components/UserAttendance'
 import UserGroup from '../components/UserGroup'
 import UserMonitorRelation from '../components/UserMonitorRelation'
 import Blacklist from '../components/Blacklist'
+import UpgradeRule from '../components/UpgradeRule'
 
 Vue.use(Router)
 
@@ -66,8 +67,13 @@ const routes = [
   },
   {
     path: '/Blacklist',
-    name: Blacklist,
+    name: 'Blacklist',
     component: Blacklist
+  },
+  {
+    path: '/UpgradeRule',
+    name: 'UpgradeRule',
+    component: UpgradeRule
   }
 ]
 

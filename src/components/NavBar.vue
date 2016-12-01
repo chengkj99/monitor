@@ -39,7 +39,7 @@
             <router-link to="/MonitorItem">监控项管理</router-link>
           </li>
           <li>
-            <router-link to="/test">升级规则管理</router-link>
+            <router-link to="/UpgradeRule">升级规则管理</router-link>
           </li>
           
         </ul>    
@@ -54,5 +54,27 @@
     position: relative;
     display: block;
     padding: 50px 0px 50px 20px;
+    .menu{
+      
+      .menu-list{
+        
+        li{
+          background-color: white;
+          max-width: 83%;
+          border: 1px solid #ccc;
+          margin-bottom: 10px;
+          
+          >a{
+            border-radius: 2px;
+            color: #4a4a4a;
+            display: block;
+            padding: 5px 10px;
+            box-shadow: 0px 0px 15px #ccc;
+          }
+        }
+        
+      }
+      
+    }
   }
 </style>

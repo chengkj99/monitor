@@ -1,12 +1,20 @@
 <template>
   <div id="modal-rename" @click.self="modalChange" >
     <div class="container"  id="table-box" :style=" tableBoxStyle ">
-      <h3 class="title is-4">修改监控项名称</h3>
-      <div>
+     <!-- 监控项 -->
+      <template v-if="componentName=='监控项'">
+        <h3 class="title is-4">修改{{componentName}}名称</h3>
+      </template>
+      <!-- 系统来源 -->
+      <template v-else>
+        <h3 class="title is-4">修改系统来源名称</h3>
+      </template>
+      
+      <div v-if="componentName=='监控项'">
         <div>
           <label class="label">旧监控项名称:</label>
           <p class="control">
-            <input class="input" type="text" v-model="oldName" placeholder="旧监控项名称">
+            <input class="input" type="text" disabled="disabled" v-model="oldNames" placeholder="旧监控项名称">
           </p>
         </div>
 
@@ -17,8 +25,26 @@
           </p>
         </div>
       </div>
+      
+      <div v-else>
+        <div>
+          <label class="label">旧系统名称:</label>
+          <p class="control">
+            <input class="input"  type="text" disabled="disabled" v-model="oldNames" placeholder="旧系统名称">
+          </p>
+        </div>
+
+        <div>
+          <label class="label">新系统名称:</label>
+          <p class="control">
+            <input class="input" type="text" v-model="newName" placeholder="新系统名称">
+          </p>
+        </div>
+      </div>
+
+
       <div class="renameDo">
-        <a class="button">重置</a>
+        <a class="button" @click="resetHandle">重置</a>
         <a class="button" @click="saveHandle">保存</a>
       </div>
     </div>
@@ -27,14 +53,26 @@
 
 <script>
     export default{
-      props:['metricName','sysName','renameId'],
+      props:['componentName','metricName','sysName','renameId'],
       data(){
         return{
           tableBoxStyle:{
            marginTop:(window.innerHeight-window.innerHeight*0.47)/2+"px"
           },
           oldName:'',
-          newName:''
+          newName:'',
+        }
+      },
+      computed:{
+      /* 改出始名 不然会报警告 */
+        oldNames () {
+          if(this.componentName=='监控项'){
+            this.oldName=this.metricName
+          }
+          else{
+            this.oldName=this.sysName
+          }
+          return this.oldName;
         }
       },
       methods:{
@@ -48,9 +86,11 @@
         modalChange () {
           this.$store.dispatch('RENAME_CHANGE_AC')         
         },
+        resetHandle () {
+          this.newName='';
+        },
         saveHandle (e) {
-          alert('保存')
-          alert(this.metricName+'//'+this.sysName+"//"+this.renameId)
+          alert("保存:"+this.metricName+'//'+this.sysName+"//"+this.renameId+"//"+this.newName)
         }
       }
     }
@@ -72,13 +112,13 @@
     left: 0;
     bottom: 0;
     .container{
-      width: 30%;
+      width: 350px;
       position: relative;
       display: block;
-      height: 47%;
+      height: 315px;
       overflow: auto;
       margin: auto;
-      background-color: black;
+      background-color: $background;
       -webkit-border-radius: 7px;
       -moz-border-radius: 7px;
       border-radius: 7px;
