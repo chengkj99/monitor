@@ -3,6 +3,7 @@
 <template>
   <div id="rule-node">
     <BlackListRule componentName="升级规则配置" :listData="listData"></BlackListRule>
+    
   </div>
 </template>
 
@@ -15,49 +16,22 @@ import BlackListRule from './tpl/BlackListRule'
     components:{
       BlackListRule
     },
-  
     data () {
       return {
-        listData: [
-          {
-            Id: 2,
-            SystemName: "system",
-            Metric: "memory_used",
-            Type: 2,
-            Period: 36000,
-            Value: "10",
-            TargetLevel: 7
-          },          
-          {
-            Id: 3,
-            SystemName: "system",
-            Metric: "view_available",
-            Type: 2,
-            Period: 36000,
-            Value: "10",
-            TargetLevel: 7
-          },
-          {
-            Id: 4,
-            SystemName: "fcm",
-            Metric: "view_available",
-            Type: 2,
-            Period: 36000,
-            Value: "10",
-            TargetLevel: 7
-          },
-          {
-            Id: 6,
-            SystemName: "fcm",
-            Metric: "memory_used",
-            Type: 2,
-            Period: 36000,
-            Value: "10",
-            TargetLevel: 7
-          }
-        ]
+        listData:[]
       }
-    }   
+    },
+    computed:{
+      listData () {
+        return this.$store.state.RuleListData;
+      }
+    },
+    methods:{
+    
+    },
+    mounted () {
+      this.$store.dispatch('GET_RULE_LIST_AC')
+    }
   }
 </script>
 

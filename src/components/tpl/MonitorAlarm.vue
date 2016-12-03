@@ -94,11 +94,35 @@ import AddMonitorItem from './AddMonitorItem'
     methods: {
     
       deleteHandle (e) {
-        let itemId=e.target.dataset.id; 
+        let itemId=e.target.dataset.id;
+        if(this.componentName=='监控项'){
+          this.$store.dispatch({
+            type:'DEL_MONITOR_ITEM_AC',
+            amount:itemId
+          })
+        }else{
+          this.$store.dispatch({
+            type:'DEL_ALARM_SOURCE_AC',
+            amount:itemId
+          })
+        }
         alert('删除'+itemId)
       },
       confirmHandle (e) {
         let itemId=e.target.dataset.id; 
+        
+         if(this.componentName=='监控项'){
+           this.$store.dispatch({
+             type:'CONFIRM_MONITOR_ITEM_AC',
+             amount:itemId
+          })
+         }else{
+         this.$store.dispatch({
+             type:'CONFIRM_ALARM_SOURCE_AC',
+             amount:itemId
+          })
+         }
+
         alert('确认'+itemId)
       },
       modalChange (e) {

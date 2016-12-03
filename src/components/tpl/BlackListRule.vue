@@ -14,10 +14,9 @@
       <table class="table">
         <thead>
         <tr>
-          <th>所属小组</th>
           <th>告警来源系统</th>
-          <th>告警节点</th>
-          <th>告警子节点</th>
+          <th>监控节点</th>
+          <th>监控子节点</th>
           <th>监控项名称</th>
           <th>告警开始时间</th>
           <th>告警截止时间</th>
@@ -28,7 +27,6 @@
         
         <tbody>
         <tr v-for="v in listData">
-          <td>{{ v.GroupName }}</td>
           <td>{{ v.SystemName }}</td>
           <td>{{ v.Endpoint }}</td>
           <td>{{ v.SubEndpoint }}</td>
@@ -84,10 +82,7 @@
         <AddRule :componentName="componentName" v-on:modalChange="addMonitor"></AddRule>
       </div>
     </template>
- 
     
-
-
 
   </div>
 </template>
@@ -103,7 +98,6 @@ import AddBacklist from './AddBacklist'
   
     data () {
       return {
-        modalRenameShow:false,
         modalAddShow:false,
         
         
@@ -115,6 +109,15 @@ import AddBacklist from './AddBacklist'
     
       deleteHandle (e) {
         let itemId=e.target.dataset.id; 
+        
+        //通过componentName判定派发哪个actions
+        //黑名单还是事件规则
+        
+        this.$store.dispatch({
+          type:'DEL_BACK_LIST_AC',
+          amount:itemId
+        })
+        
         alert('删除'+itemId)
       },
       confirmHandle (e) {
@@ -137,9 +140,7 @@ import AddBacklist from './AddBacklist'
       }
     },
     computed: {
-      modalRenameShow () {
-        return this.$store.state.modalRenameShow
-      }
+     
     },
     filters: {
       ConfirmState (val) {

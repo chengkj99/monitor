@@ -6,7 +6,7 @@
       <h3 class="title is-4">添加{{componentName}}</h3>
       <div>
         <div>
-          <label class="label">来源系统:</label>
+          <label class="label">来源系统＊</label>
           <!-- 监控项 select -->
           <p class="control" v-if="componentName=='监控项'">
             <span class="select" >
@@ -23,14 +23,14 @@
 
         <!-- 监控项 only-->
         <div v-if="componentName=='监控项'">
-          <label class="label" >监控项名称:</label>
+          <label class="label" >监控项名称＊</label>
           <p class="control">
             <input class="input" type="text" v-model="metricName" placeholder="监控项名称">
           </p>
         </div>
         
         <div>
-          <label class="label">描述:</label>
+          <label class="label">描述</label>
           <p class="control">
             <!-- 监控项 -->
             <textarea class="textarea" v-model="alarmContent" placeholder="监控项描述"v-if="componentName=='监控项'"></textarea>
@@ -76,7 +76,29 @@
         modalChange () {
           this.$emit('modalChange')       
         },
-        saveHandle (e) {
+        saveHandle () {
+          if(this.componentName=='监控项'){
+            this.$store.dispatch({
+              type:'ADD_MONITOR_ITEM_AC',
+              amount:{
+                SystemName: this.SystemName,
+                MetricName: this.metricName,
+                Describe: this.alarmContent,
+                ConfirmState:true
+              }
+            })
+          }else{
+            this.$store.dispatch({
+              type:'ADD_ALARM_SOURCE_AC',
+              amount:{
+                SystemName: this.SystemName,
+                Describe: this.alarmContent,
+                ConfirmState:true
+              }
+            })
+          }
+
+        
           alert('保存'+this.SystemName+'--'+this.metricName+'---'+this.alarmContent);
         },
         resetHandle () {

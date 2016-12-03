@@ -8,7 +8,7 @@
 
       <div>
         <div>
-          <label class="label">来源系统:</label>
+          <label class="label">来源系统＊</label>
           
           <!-- 添加黑名单：来源系统名称 select -->
           <p class="control">
@@ -24,7 +24,7 @@
 
         <!-- 添加黑名单：监控项名称 select -->
         <div>
-          <label class="label" >监控项名称:</label>
+          <label class="label" >监控项名称＊</label>
           <p class="control">
             <span class="select" >
               <select v-model="metricName">
@@ -39,15 +39,22 @@
         <!-- 添加黑名单：告警节点名称  -->
 
         <div>
-          <label class="label">告警节点名称:</label>
+          <label class="label">监控节点名称＊</label>
           <p class="control">
-            <input class="input" type="text" v-model="Endpoint" placeholder="告警节点名称">
+            <input class="input" type="text" v-model="endpoint" placeholder="告警节点名称">
+          </p>
+        </div>
+
+        <div>
+          <label class="label">监控子节点名称＊</label>
+          <p class="control">
+            <input class="input" type="text" v-model="subEndpoint" placeholder="告警子节点名称">
           </p>
         </div>
         
 
         <div>
-          <label class="label" >加黑时长:</label>
+          <label class="label" >加黑时长＊</label>
 
           <template v-if="isCustom">
             <p class="control">
@@ -70,6 +77,13 @@
           
         </div>
 
+        <div>
+          <label class="label">加黑原因</label>
+          <p class="control">
+            <textarea class="textarea" v-model="reason" placeholder="加黑原因"></textarea>
+          </p>
+        </div>
+
       </div>
       <div class="renameDo">
         <a class="button" @click="resetHandle">重置</a>
@@ -86,14 +100,18 @@
         return{
         
           tableBoxStyle:{
-           marginTop:(window.innerHeight-430)/2+"px",
-           height:"430px"
+           marginTop:(window.innerHeight-655)/2+"px",
+           height:"655px"
           },
           
           systemName:'',
           metricName:'',
-          Endpoint:'',
-          periodData:'',          
+          endpoint:'',
+          curTime:'',
+          newTime:'',
+          subEndpoint:'',
+          periodData:'',
+          reason:'',
           
           isCustom:false,
           
@@ -123,23 +141,92 @@
         }
         }
       },
+      computed:{
+        
+      },
       methods:{
+        isNumber (val) {
+          return typeof val === 'number' && isFinite(val);
+        },
         modalChange () {
           this.$emit('modalChange')       
         },
         saveHandle (e) {
+
+          let printTime=new Date();
+          
+          let curHour=printTime.getHours();
+          let newHour=0;
+          if(this.isNumber(this.periodData)){
+             newHour=curHour+this.periodData;
+          }else{
+             newHour=curHour+Number(this.periodData.split('h')[0]);
+          }
+          
+          
+          let curDay=printTime.getDate();
+          let newDay=0;
+          
+          if(newHour<24){
+            newDay=curDay;
+          }else if(newHour==24){
+            newDay=curDay+1;
+            newHour=0;
+          }else{
+            //Math.floor(0.60):向下取整  ％:取余
+            newDay=curDay+Math.floor(newHour/24);
+            newHour= newHour%24;
+          }
+          
+          
+          console.log('curHour:'+curHour+'---newHour:'+newHour)
+          
+          
+          this.curTime=printTime.getFullYear() + '-' + printTime.getMonth() + '-'
+          + curDay + ' ' + curHour + ':'+ 
+          printTime.getMinutes() + ':' + printTime.getSeconds();
+          
+          this.newTime=printTime.getFullYear() + '-' + printTime.getMonth() + '-'
+          + newDay + ' ' + newHour + ':'+ 
+          printTime.getMinutes() + ':' + printTime.getSeconds();
+          
+          
+          this.$store.dispatch({
+            type:'ADD_BACK_LIST_AC',
+            amount:{
+             SystemName: this.systemName,
+             Endpoint: this.endpoint,
+             SubEndpoint: this.subEndpoint ,
+             Metric: this.metricNam,
+             BeginTime: this.curTime,
+             EndTime: this.newTime,
+             Reason: this.reason
+            }
+          })
           alert('保存'+this.systemName+'--'
           +this.metricName+'---'
           +this.periodData+''+'---'
-          +this.Endpoint+''+'---'
+          +this.endpoint+''+'---'
+          +this.subEndpoint+"---"
+          +this.reason+'==='
+          +'curTime:'+this.curTime
+          +'---'+'newTime:'
+          +this.newTime
           )
         },
         resetHandle () {
           this.isCustom=false;
           this.systemName='';
           this.metricName='';
-          this.Endpoint='';
+          
+          this.endpoint='';
+          this.curTime='';
+          this.newTime='';
+          
+          this.subEndpoint=''
           this.periodData='';
+          this.reason='';
+          
         }
       }
     }

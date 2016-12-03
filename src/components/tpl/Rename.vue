@@ -90,6 +90,15 @@
           this.newName='';
         },
         saveHandle (e) {
+        
+        this.$store.dispatch({
+          type:'UPDATE_MONITOR_ITEM_AC',
+          amount:{
+          systemName:this.sysName,
+          nameOld:this.metricName,
+          nameNew:this.newName
+          }
+        })
           alert("保存:"+this.metricName+'//'+this.sysName+"//"+this.renameId+"//"+this.newName)
         }
       }

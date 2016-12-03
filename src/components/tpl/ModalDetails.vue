@@ -19,13 +19,13 @@
             </p>
           </div>
           <div>
-            <label class="label">告警节点:</label>
+            <label class="label">监控节点:</label>
             <p class="control">
               <input class="input" disabled="disabled" type="text" v-model="obj.Endpoint" placeholder="Text input">
             </p>
           </div>
           <div>
-            <label class="label">告警子节点:</label>
+            <label class="label">监控子节点:</label>
             <p class="control">
               <input class="input" disabled="disabled" type="text" v-model="obj.SubEndpoint" placeholder="Text input">
             </p>
@@ -81,7 +81,8 @@
       data(){
         return{
           tableBoxStyle:{
-           marginTop:(window.innerHeight-window.innerHeight*0.95)/2+"px"
+           marginTop:(window.innerHeight-770)/2+"px",
+           height:"770px"
           },
           details:[
             {
@@ -132,10 +133,9 @@
     left: 0;
     bottom: 0;
     .container{
-      width: 60%;
+      width: 350px;
       position: relative;
       display: block;
-      height: 95%;
       overflow: auto;
       margin: auto;
       background-color: black;
@@ -156,7 +156,7 @@
       >div{
         position: relative;
         display: block;
-        width: 50%;
+        width: 80%;
         text-align: left;
         margin: auto;
         

@@ -2,12 +2,18 @@
 
 <template>
     <div id="alarm-node">
+      <div class="monitor-alarm-box">
+        <h3 class="title is-3">
+          报警信息管理
+        </h3>
+      </div>
+      
       <div class="condition">
         <div>
           <label class="label">告警来源系统：</label>
           <p class="control">
           <span class="select">
-            <select>
+            <select v-model="sysName">
               <option>Select dropdown</option>
               <option>With options</option>
             </select>
@@ -15,16 +21,16 @@
           </p>
         </div>
         <div>
-          <label class="label">告警节点：</label>
+          <label class="label">监控节点：</label>
           <p class="control">
-            <input class="input" type="text" placeholder="Text input">
+            <input class="input" type="text" v-model="endpoint" placeholder="Text input">
           </p>
         </div>
         <div>
-          <label class="label">监控项：</label>
+          <label class="label" >监控项：</label>
           <p class="control">
           <span class="select">
-            <select>
+            <select v-model="metricName">
               <option>Select dropdown</option>
               <option>With options</option>
             </select>
@@ -41,8 +47,8 @@
         <tr>
           <th>标题</th>
           <th>告警来源系统</th>
-          <th>告警节点</th>
-          <th>告警子节点</th>
+          <th>监控节点</th>
+          <th>监控子节点</th>
           <th>监控项</th>
           <th>值</th>
           <th>阀值</th>
@@ -73,10 +79,14 @@
         </tr>
         </tbody>
       </table>
-      <VuePage :data-num="pagedata.length" :each="eachPageSize" :visiblepage="visiblepage" @change-page="changePage"></VuePage>
+      <div id="page">
+        <zpagenav :page="page" :page-size="pageSize" :total="total" :max-link="maxLink" :page-handler="pageHandler" :create-url="createUrl"></zpagenav>
+      </div>
+
+
 
       <div v-show="modalShow">
-        <ModalHistory message="chengkangjian"></ModalHistory>
+        <ModalHistory></ModalHistory>
       </div>
       <div v-show="modalDetailsShow">
         <ModalDetails></ModalDetails>
@@ -89,69 +99,24 @@
 <script>
 import ModalHistory from './tpl/ModalHistory'
 import ModalDetails from './tpl/ModalDetails'
-import VuePage from './tpl/VuePage'
   export default {
   data () {
     return {
       name: 'alarm-node',
       
-      cur: 0, 
-      dataNum: 0, 
-      eachPageSize: 3, 
-      visiblepage: 5, 
-      pagedata: [1, 2, 3, 4, 5, 6, 7, 8, 9], 
-      curpage: 1,
+      sysName:'',
+      endpoint:'',
+      metricName:'',
+      
+        page: 1, //page,pageSize: 10 
+        pageSize:10, // default is 10
+        total: 509, //total item count
+        maxLink: 5, //how many links to show, must not less than 5,  default is 5
         
       
       modalShow: false,
       modalDetailsShow: false,
-      listData:[ 
-      {
-          Id: 9,
-          Title: "title",
-          AlarmId: "system_192.168.0.1_memory_used",
-          SystemName: "system",
-          Endpoint: "192.168.0.1",
-          SubEndpoint: "192",
-          Metric: "memory_used",
-          Value: "0.92",
-          BaseValue: "0.8",
-          Level: 1,
-          AlarmContent: "test",
-          FirstReportTime: "2016-11-15 20:48:01",
-          LastReportTime: "2016-11-24 10:42:04"
-      },
-      {
-          Id: 8,
-          Title: "title",
-          AlarmId: "system_192.168.0.1_memory_used",
-          SystemName: "system",
-          Endpoint: "192.168.0.1",
-          SubEndpoint: "192",
-          Metric: "memory_used",
-          Value: "0.92",
-          BaseValue: "0.8",
-          Level: 1,
-          AlarmContent: "test",
-          FirstReportTime: "2016-11-15 20:48:01",
-          LastReportTime: "2016-11-24 10:42:04"
-      },
-      {
-          Id: 7,
-          Title: "title",
-          AlarmId: "system_192.168.0.1_memory_used",
-          SystemName: "system",
-          Endpoint: "192.168.0.1",
-          SubEndpoint: "192",
-          Metric: "memory_used",
-          Value: "0.92",
-          BaseValue: "0.8",
-          Level: 1,
-          AlarmContent: "test",
-          FirstReportTime: "2016-11-15 20:48:01",
-          LastReportTime: "2016-11-24 10:42:04"
-      }
-      ]
+      listData:[]
     }
   },
   computed: {
@@ -160,10 +125,24 @@ import VuePage from './tpl/VuePage'
     },
     modalDetailsShow () {
       return this.$store.state.modalDetailsShow
+    },
+    listData () {
+      return this.$store.state.AlarmData
     }
   },
+  mounted () {
+    this.$store.dispatch('GET_ALARM_AC')
+  },
   methods: {
-    queryHandle () {
+    queryHandle (e) {
+      this.$store.dispatch({
+        type:'QUERY_ALARM_AC',
+        amount:{
+          SystemName:this.sysName,
+          Endpoint:this.endpoint,
+          Metric:this.metricName
+        }
+      })
       alert('query function!')
     },
     historyHandle (e) {     
@@ -173,16 +152,20 @@ import VuePage from './tpl/VuePage'
     detailsHandle () {
       this.$store.dispatch('DETAILS_CHANGE_AC')
     },
-    changePage (cur) {
-        this.curpage = cur
-        alert(cur)
-    }
-   
+    
+    pageHandler (page) {
+      //here you can do custom state update
+      this.page = page
+      alert(page)
+    },
+    createUrl (unit) {
+      return unit.page > 1?'#page=' + unit.page:'#'
+    }  
+  
   },
   components:{
     ModalHistory,
-    ModalDetails,     
-    VuePage
+    ModalDetails    
    }
 }
 </script>
@@ -190,6 +173,17 @@ import VuePage from './tpl/VuePage'
 <style lang="scss">
 
   #alarm-node{
+
+    .monitor-alarm-box{
+
+      h3{
+        img{
+          width: 22px;
+          height: auto;
+        }
+      }
+    }
+    
     .condition{
       position: relative;
       display: block;
@@ -197,7 +191,7 @@ import VuePage from './tpl/VuePage'
       flex-wrap: nowrap;
       justify-content: space-around;
       width: 100%;
-      margin-bottom: 10px;
+      margin: 20px 0px 10px 0px;
 
       >div{
         display: inline-block;

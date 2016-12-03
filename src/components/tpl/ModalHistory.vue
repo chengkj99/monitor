@@ -7,8 +7,8 @@
           <tr>
             <th>标题</th>
             <th>告警来源系统</th>
-            <th>告警节点</th>
-            <th>告警子节点</th>
+            <th>监控节点</th>
+            <th>监控子节点</th>
             <th>监控项</th>
             <th>值</th>
             <th>阀值</th>
@@ -41,11 +41,11 @@
 
 <script>
     export default{
-       props:['message'],
+      
        data(){
          return{
          tableBoxStyle:{
-          marginTop:(window.innerHeight-window.innerHeight*0.95)/2+"px"
+          marginTop:(window.innerHeight-800)/2+"px"
          },
           details:[
           {
@@ -370,7 +370,7 @@
       width: 80%;
       position: relative;
       display: block;
-      height: 95%;
+      height: 800px;
       overflow: auto;
       margin: auto;
       border-radius: 10px;

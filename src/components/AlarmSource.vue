@@ -3,7 +3,12 @@
 <template>
   <div id="monitor-item-node">
     <MonitorAlarm componentName="告警来源系统" :listData="listData"></MonitorAlarm>
+
   </div>
+
+
+
+
 </template>
 
 
@@ -17,29 +22,21 @@ import MonitorAlarm from './tpl/MonitorAlarm'
     },
   
     data () {
-      return {
-        listData: [
-          {
-              Id: 1,
-              SystemName: "system",
-              Describe: "Describe",
-              ConfirmState: true//false显示未确认后面加确认操作//true已确认
-          },
-          {
-              Id: 3,
-              SystemName: "wtf",
-              Describe: "Describe",
-              ConfirmState: false
-          },
-          {
-              Id: 6,
-              SystemName: "fuck",
-              Describe: "Describe",
-              ConfirmState: false
-          }
-        ]
+      return {    
+       listData: []
       }
-    }   
+    },
+    computed:{
+      listData () {
+        return this.$store.state.AlarmSourceData;
+      }
+    },
+    methods:{
+    
+    },
+    mounted () {
+      this.$store.dispatch('GET_ALARM_SOURCE_AC')
+    }
   }
 </script>
 

@@ -8,7 +8,7 @@
       
       <div>
         <div>
-          <label class="label">来源系统:</label>
+          <label class="label">来源系统＊</label>
           <!-- 升级规则：来源系统名称 select -->
           <p class="control">
             <span class="select" >
@@ -23,7 +23,7 @@
 
         <!-- 升级规则：监控项名称 select -->
         <div>
-          <label class="label" >监控项名称:</label>
+          <label class="label" >监控项名称＊</label>
           <p class="control">
             <span class="select" >
               <select v-model="metricName">
@@ -60,7 +60,7 @@
           </p>
         </div>
         <div v-show="typePicked!='2'">
-          <label class="label" >判定时间段:</label>
+          <label class="label" >判定时间段＊</label>
           <p class="control">
             <span class="select" >
               <select v-model="periodData">
@@ -72,7 +72,7 @@
           </p>
         </div>
         <div v-show="typePicked!='1'">
-          <label class="label" >数值:</label>
+          <label class="label" >数值＊</label>
           <p class="control">
             <input class="input" @blur="checkNumber" :style="valueState ? '': borderTips " 
                    type="text" v-model="value" placeholder="数值">
@@ -80,7 +80,7 @@
         </div>
 
         <div>
-          <label class="label" >原始级别:</label>
+          <label class="label" >原始级别＊</label>
           <p class="control">
             <span class="select" >
               <select v-model="originalLevel">
@@ -92,7 +92,7 @@
           </p>
         </div>
         <div>
-          <label class="label" >要升到的级别:</label>
+          <label class="label" >要升到的级别＊</label>
           <p class="control">
             <span class="select" >
               <select v-model="upgradeLevel">
@@ -184,6 +184,19 @@
           this.$emit('modalChange')       
         },
         saveHandle (e) {
+        
+          let newPeriodData=Number(this.periodData.split('h')[0])*3600;
+          this.$store.dispatch({
+            type:'ADD_BACK_LIST_AC',
+            amount:{
+              SystemName:this.systemName,
+              Metric:this.metricName,
+              Type: this.typePicked, 
+              Period: newPeriodData,  
+              Value: this.value, 
+              TargetLevel: this.upgradeLevel
+            }
+          })
           alert('保存'+this.systemName+'--'
           +this.metricName+'---'
           +this.typePicked+''+'---'
