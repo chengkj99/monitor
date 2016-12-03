@@ -21,6 +21,14 @@ const actions = {
   RENAME_CHANGE_AC({ commit }) {
     commit('RENAME_CHANGE')
     return Promise.resolve()
+  }, 
+  USER_UPDATE_CHANGE_AC({ commit }) {
+    commit('USER_UPDATE_CHANGE')
+    return Promise.resolve()
+  },  
+  ADD_USER_RELATE_CHANGE_AC({ commit }) {
+    commit('ADD_USER_RELATE_CHANGE')
+    return Promise.resolve()
   },
   
   /*---------------------------------------------黑名单--------------------*/
@@ -164,6 +172,7 @@ const actions = {
       type:'GET_ALARM_SOURCE',
       AlarmSourceData:state.AlarmSourceData
     })
+    return Promise.resolve()
 
   },
   //添加来源系统数据
@@ -223,6 +232,7 @@ const actions = {
       type:'GET_ALARM',
       AlarmData:state.AlarmData
     })
+    return Promise.resolve()
 
   },
   // 按条件查询数据
@@ -235,9 +245,147 @@ const actions = {
       type:'QUERY_ALARM',
       AlarmData:state.AlarmData
     })
+    return Promise.resolve()
+
+  },  
+  // 查看来源系统详情数据
+  DETAILS_ALARM_AC ({ commit },payload) {
+
+    // 调用查询接口 查数据 payload.amount :ModalDetailsData
+    console.log(payload.amount)
+
+    commit({
+      type:'DETAILS_ALARM',
+      ModalDetailsData:state.ModalDetailsData
+    })
+    return Promise.resolve()
+
+  },
+
+  // 查看来源系统历史数据
+  HISTORY_ALARM_AC ({ commit },payload) {
+
+    // 调用查询接口 查数据 payload.amount :ModalHistoryData
+    console.log(payload.amount)
+
+    commit({
+      type:'HISTORY_ALARM',
+      ModalHistoryData:state.ModalHistoryData
+    })
+    return Promise.resolve()
+
+  },
+  // 告警恢复
+  RESTORE_ALARM_AC ({ commit },payload) {
+
+    // 调用接口 恢复  payload.amount 
+    // 调用查询接口 查数据  :AlarmData
+     console.log(payload.amount)
+
+    commit({
+      type:'RESTORE_ALARM',
+      AlarmData:state.AlarmData
+    })
+    return Promise.resolve()
+
+  },
+  /*---------------------------------------------用户管理--------------------*/
+
+  ADD_USER_AC ({ commit },payload) {
+
+  // 调用添加用户接口 payload.amount  :UserDataAdd
+    console.log(payload.amount)
+    commit({
+      type:'ADD_USER',
+      UserDataAdd:payload.amount
+    })
+    return Promise.resolve()
+
+  },
+  UPDATE_USER_AC ({ commit },payload) {
+
+    // 调用修改用户数据接口 payload.amount  
+    //查询更新数据 :UserData
+    console.log(payload.amount)
+
+    commit({
+      type:'UPDATE_USER',
+      UserData:UserData
+    })
+    return Promise.resolve()
+
+  },  
+  DEL_USER_AC ({ commit },payload) {
+
+    // 调用删除用户数据接口 payload.amount  
+    //查询更新数据 :UserData
+    console.log(payload.amount)
+
+    commit({
+      type:'DEL_USER',
+      UserData:UserData
+    })
+    return Promise.resolve()
 
   },
   
+  /*---------------------------------------------用户组管理--------------------*/
+  ADD_USER_GROUP_AC ({ commit },payload) {
+
+    // 调用添加用户接口 payload.amount  :UserGroupData
+    console.log(payload.amount)
+
+    commit({
+      type:'ADD_USER_GROUP',
+      UserGroupDataAdd:payload.amount
+    })
+    return Promise.resolve()
+
+  },
+  UPDATE_USER_GROUP_AC ({ commit },payload) {
+
+    // 调用修改用户组数据接口 payload.amount  
+    //查询更新数据 :UserGroupData
+    console.log(payload.amount)
+
+    commit({
+      type:'UPDATE_USER_GROUP',
+      UserGroupData:UserGroupData
+    })
+    return Promise.resolve()
+
+  },
+  DEL_USER_GROUP_AC ({ commit },payload) {
+
+    // 调用删除用户组数据接口 payload.amount  
+    //查询更新数据 :UserGroupData
+    console.log(payload.amount)
+
+    commit({
+      type:'DEL_USER_GROUP',
+      UserGroupData:UserGroupData
+    })
+    return Promise.resolve()
+
+  },
+  
+  
+  
+  /*---------------------------------------------公共组件所需数据获取--------------------*/
+
+  // 获取来源系统名称
+  GET_SYSTEM_NAME_AC ({ commit },payload) {
+
+    // 调用查询接口 查数据  :SystemNameData
+
+    commit({
+      type:'GET_SYSTEM_NAME',
+      SystemNameData:state.SystemNameData
+    })
+    return Promise.resolve()
+
+  }
+
 
 
 }

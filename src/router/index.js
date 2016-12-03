@@ -13,10 +13,12 @@ import Alarm from '../components/Alarm'
 import AlarmSource from '../components/AlarmSource'
 import MonitorItem from '../components/MonitorItem'
 import UserAttendance from '../components/UserAttendance'
+import User from '../components/User'
 import UserGroup from '../components/UserGroup'
 import UserMonitorRelation from '../components/UserMonitorRelation'
 import Blacklist from '../components/Blacklist'
 import UpgradeRule from '../components/UpgradeRule'
+import UserRelation from '../components/UserRelation'
 
 Vue.use(Router)
 
@@ -40,6 +42,11 @@ const routes = [
     path: '/MonitorItem',
     name: 'MonitorItem',
     component: MonitorItem
+  },
+  {
+    path: '/User',
+    name: 'User',
+    component: User
   },
   {
     path: '/UserAttendance',
@@ -74,6 +81,11 @@ const routes = [
     path: '/UpgradeRule',
     name: 'UpgradeRule',
     component: UpgradeRule
+  },  
+  {
+    path: '/UserRelation',
+    name: 'UserRelation',
+    component: UserRelation
   }
 ]
 

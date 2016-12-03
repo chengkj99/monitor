@@ -15,7 +15,7 @@
             <span class="select" >
               <select v-model="systemName">
                 <option v-for="val in selectSysName" >
-                  {{val}}
+                  {{val.SystemName}}
                 </option>
               </select>
             </span>
@@ -118,11 +118,7 @@
           PeriodSelect:['1h','2h','3h','4h','5h','6h','7h','8h','9h','10h',
           '11h','12h','13h','14h','15h','16h','17h','18h','19h','20h','21h',
           '22h','23h','24h'],
-          selectSysName:{
-            Select1:'SysName11',
-            Select2:'SysName22',
-            Select3:'SysName33'
-          },          
+          selectSysName:this.$store.state.SystemNameData,          
           selectMetricName:{
             Select1:'MetricName111',
             Select2:'MetricName222',

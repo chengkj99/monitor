@@ -111,13 +111,12 @@ import AddBacklist from './AddBacklist'
         let itemId=e.target.dataset.id; 
         
         //通过componentName判定派发哪个actions
-        //黑名单还是事件规则
+        //黑名单 还是事件规则
         
         this.$store.dispatch({
           type:'DEL_BACK_LIST_AC',
           amount:itemId
         })
-        
         alert('删除'+itemId)
       },
       confirmHandle (e) {

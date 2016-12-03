@@ -16,11 +16,17 @@
       <aside class="menu">
         <!-- <p class="menu-label"></p> -->
         <ul class="menu-list">
+          <li>
+            <router-link to="/User">用户管理</router-link>
+          </li>
           <li> 
             <router-link to="/UserGroup">用户组管理</router-link>
+          </li>           
+          <li> 
+            <router-link to="/UserRelation">用户组用户关系管理</router-link>
           </li> 
           <li>
-            <router-link to="/UserMonitorRelation">用户监控项关系管理</router-link>
+            <router-link to="/UserMonitorRelation">用户组监控关系管理</router-link>
           </li>
           <li>     
             <router-link to="/UserAttendance">值班管理 </router-link>

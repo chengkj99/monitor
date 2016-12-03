@@ -11,7 +11,7 @@
           <p class="control" v-if="componentName=='监控项'">
             <span class="select" >
               <select v-model="SystemName">
-                <option v-for="val in selectData" >{{val}}</option>
+                <option v-for="val in selectData" >{{val.SystemName}}</option>
               </select>
             </span>
           </p>
@@ -65,11 +65,7 @@
           metricName:'',
           alarmContent:'',
           
-          selectData:{
-            Select1:'dropdown1',
-            Select2:'dropdown2',
-            Select3:'dropdown3'
-          }
+          selectData:this.$store.state.SystemNameData
         }
       },
       methods:{

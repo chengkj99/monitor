@@ -14,8 +14,9 @@
           <p class="control">
           <span class="select">
             <select v-model="sysName">
-              <option>Select dropdown</option>
-              <option>With options</option>
+              <option v-for="val in selectSysName" >
+                {{val.SystemName}}
+              </option>
             </select>
           </span>
           </p>
@@ -45,7 +46,6 @@
       <table class="table">
         <thead>
         <tr>
-          <th>标题</th>
           <th>告警来源系统</th>
           <th>监控节点</th>
           <th>监控子节点</th>
@@ -60,7 +60,6 @@
         </thead>
         <tbody>
         <tr v-for="obj in listData">
-          <td>{{ obj.Title }}</td>
           <td>{{ obj.SystemName }}</td>
           <td>{{ obj.Endpoint }}</td>
           <td>{{ obj.SubEndpoint }}</td>
@@ -71,10 +70,10 @@
           <td>{{ obj.LastReportTime }}</td>
           <td>{{ obj.FirstReportTime }}</td>
           <td>
-            <a class="button is-small" @click="historyHandle" :data-id="obj.Id">查看历史</a>
-            <a class="button is-small" @click="detailsHandle" :data-id="obj.Id">详情</a>
+            <a class="button is-small" @click="historyHandle"  :data-id="obj.Id">查看历史</a>
+            <a class="button is-small" @click="detailsHandle"  :data-id="obj.Id">详情</a>
             <router-link class="button is-small" to="/Blacklist">黑名单</router-link>
-            <a class="button is-small" :data-id="obj.Id">恢复</a>
+            <a class="button is-small" @click="restoreHandle" :data-id="obj.Id">恢复</a>
           </td>
         </tr>
         </tbody>
@@ -103,15 +102,16 @@ import ModalDetails from './tpl/ModalDetails'
   data () {
     return {
       name: 'alarm-node',
+      selectSysName:this.$store.state.SystemNameData,          
       
       sysName:'',
       endpoint:'',
       metricName:'',
       
-        page: 1, //page,pageSize: 10 
-        pageSize:10, // default is 10
-        total: 509, //total item count
-        maxLink: 5, //how many links to show, must not less than 5,  default is 5
+      page: 1, //page,pageSize: 10 
+      pageSize:10, // default is 10
+      total: 509, //total item count
+      maxLink: 5, //how many links to show, must not less than 5,  default is 5
         
       
       modalShow: false,
@@ -146,11 +146,27 @@ import ModalDetails from './tpl/ModalDetails'
       alert('query function!')
     },
     historyHandle (e) {     
-      console.log(e.target.dataset.id)
+      let aimID=e.target.dataset.id
       this.$store.dispatch('MODAL_CHANGE_AC')
+      this.$store.dispatch({
+        type:'HISTORY_ALARM_AC',
+        amount:aimID
+      })
     },
-    detailsHandle () {
+    detailsHandle (e) {
+      let aimID=e.target.dataset.id
       this.$store.dispatch('DETAILS_CHANGE_AC')
+      this.$store.dispatch({
+        type:'DETAILS_ALARM_AC',
+        amount:aimID
+      })
+    },
+    restoreHandle (e) {
+      let aimID=e.target.dataset.id
+      this.$store.dispatch({
+        type:'RESTORE_ALARM_AC',
+        amount:aimID
+      })
     },
     
     pageHandler (page) {

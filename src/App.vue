@@ -24,6 +24,9 @@ export default {
     FooterBar,
     AppMain,
     NavBar
+  },
+  mounted () {
+    this.$store.dispatch('GET_SYSTEM_NAME_AC')
   }
 }
 

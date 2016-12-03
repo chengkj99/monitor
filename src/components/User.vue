@@ -1,11 +1,10 @@
 <!-- 用户组管理 -->
 
-
 <!-- 黑名单组件 -->
 
 <template>
   <div id="rule-node">
-    <UserAndUserGroup componentName="用户组" :listData="listData"></UserAndUserGroup>
+    <UserAndUserGroup componentName="用户" :listData="listData"></UserAndUserGroup>
 
   </div>
 
@@ -24,11 +23,11 @@ import UserAndUserGroup from './tpl/UserAndUserGroup'
   
     data () {
       return {
-        listData:this.$store.state.UserGroupData
+        listData:this.$store.state.UserData
       }
     },
     computed:{
-    
+
     },
     methods:{
     

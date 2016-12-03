@@ -77,39 +77,19 @@
 
 <script>
     export default{
-      props:['message'],
       data(){
         return{
           tableBoxStyle:{
            marginTop:(window.innerHeight-770)/2+"px",
            height:"770px"
           },
-          details:[
-            {
-              id: 1,
-              Title: "123",
-              SystemName: "123",
-              Endpoint: "123",
-              SubEndpoint: "000",
-              Metric: "123",
-              Value: "123",
-              BaseValue: "123",
-              EventType: 1,               
-              Level: 1,
-              ReportTime: "2016-11-03 17:17:29",
-              AlarmContent: "2"
-            }
-          ]
+          details:this.$store.state.ModalDetailsData
         }
       },
+      computed: {
+
+      },
       methods:{
-        getMessage () {
-          let msg;
-          if(this.message='chengkangjian'){
-            msg='KANGJIANCHENG';
-          }
-          return msg;
-        },
         modalChange () {
           this.$store.dispatch('DETAILS_CHANGE_AC')         
         }

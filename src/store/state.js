@@ -217,16 +217,466 @@ const AlarmData=[
   }
 ]
 
+const ModalHistoryData=[
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  },
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  }
+  ]
+
+const ModalDetailsData=[
+  {
+    id: 1,
+    Title: "123",
+    SystemName: "123",
+    Endpoint: "123",
+    SubEndpoint: "000",
+    Metric: "123",
+    Value: "123",
+    BaseValue: "123",
+    EventType: 1,
+    Level: 1,
+    ReportTime: "2016-11-03 17:17:29",
+    AlarmContent: "2"
+  }
+]
+
+const SystemNameData=[
+
+  {
+    Id: 1,
+    SystemName: "system",
+    Describe: "",
+    ConfirmState: true //false显示未确认  后面加确认操作 //true已确认   
+  
+  },
+  
+  {
+    Id: 3,
+    SystemName: "wtf", 
+    Describe: "",
+    ConfirmState: false
+    },
+  
+  {
+    Id: 6,
+    SystemName: "fuck",
+    Describe: "",
+    ConfirmState: false
+  }
+]
+
+const UserData=[
+  {
+    Id: 95,
+    Name: "mingren@",
+    Mail: "z@qq.com",
+    Phone: "13000288800"
+  },
+  {
+    Id: 129,
+    Name: "zuozhu",
+    Mail: "z@qq.com",
+    Phone: "13000288800"
+  },
+  {
+    Id: 129,
+    Name: "zuozhu",
+    Mail: "z@qq.com",
+    Phone: "13000288800"
+  },
+  {
+    Id: 129,
+    Name: "zuozhu",
+    Mail: "z@qq.com",
+    Phone: "13000288800"
+  }
+]
+
+const UserGroupData=[
+  {
+   Id: 137,
+   Name: "xiao",
+   Describe: ""
+  },
+   {
+   Id: 138,
+   Name: "rename",
+   Describe: ""
+  }
+]
+
+const UserRelationData=[
+    {
+      GroupName: "xiao",
+      GroupId: 0, 
+      Users: 
+        [
+          {
+            Id: 0,
+            Name: "zuozhu",
+            Mail: "22@11.com",
+            Phone: "717718182929202"
+          },
+          {
+            Id: 0,
+            Name: "zuozhu",
+            Mail: "22@11.com",
+            Phone: "717718182929202"
+          },          
+          {
+          Id: 0,
+          Name: "zuozhu",
+          Mail: "22@11.com",
+          Phone: "717718182929202"
+        }
+        ]
+    },
+   {
+     GroupName: "rename",
+     GroupId: 0,
+     Users: 
+       [
+         {
+           Id: 0,
+           Name: "zuozhu",
+           Mail: "22@11.com",
+           Phone: "717718182929202"
+         },
+         {
+           Id: 0,
+           Name: "zuozhu",
+           Mail: "22@11.com",
+           Phone: "717718182929202"
+         },
+         {
+           Id: 0,
+           Name: "zuozhu",
+           Mail: "22@11.com",
+           Phone: "717718182929202"
+         }
+       ]
+   }, 
+  {
+    GroupName: "cheng",
+    GroupId: 0,
+    Users:
+      [
+        {
+          Id: 0,
+          Name: "zuozhu",
+          Mail: "22@11.com",
+          Phone: "717718182929202"
+        },
+        {
+          Id: 0,
+          Name: "zuozhu",
+          Mail: "22@11.com",
+          Phone: "717718182929202"
+        }
+      ]
+  }  
+  
+]
+
 
 const State = {
   modalShow: false,
   modalDetailsShow: false,
   modalRenameShow:false,
+  modalUserUpdateShow:false,
+  modalAddUserRelateShow:false,
+  
   BackListData:BackListData,
   RuleListData:RuleListData,
   MonitorItemData:MonitorItemData,
   AlarmSourceData:AlarmSourceData,
-  AlarmData:AlarmData
+  AlarmData:AlarmData,
+
+  ModalHistoryData:ModalHistoryData,
+  ModalDetailsData:ModalDetailsData,
+  SystemNameData:SystemNameData,
+
+  UserData:UserData,
+  UserGroupData:UserGroupData,
+  UserRelationData:UserRelationData
+
 }
 
 
