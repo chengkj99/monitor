@@ -8,23 +8,30 @@
 
       <template>
         <div>
-          <div>
-            <label class="label">姓名＊</label>
+          <div id="user-group-select-box">
+            <label class="label">用户组名称＊</label>
             <p class="control">
-              <input class="input" type="text" v-model="Name" placeholder="姓名">
+            <span class="select" >
+              <select v-model="GroupName" @blur="groupSelectBlurHandle">
+                <option v-for="val in UserRelationData" :data-groupId="val.GroupId" :mark="val.GroupId">
+                  {{val.GroupName}}
+                </option>
+              </select>
+            </span>
             </p>
           </div>
-
-          <div>
-            <label class="label">邮箱＊</label>
+          
+          <div id="user-select-box">
+            <label class="label">用户名＊</label>
             <p class="control">
-              <input class="input" type="text" v-model="Mail" placeholder="邮箱">
-            </p>
-          </div>
-          <div>
-            <label class="label">电话＊</label>
-            <p class="control">
-              <input class="input" type="text" v-model="Phone" placeholder="电话">
+            <span class="select" >
+              <select v-model="Name" @blur="userSelectBlurHandle">
+                <option v-for="val in UserData" :mark="val.Id">
+                  {{val.Name }}
+                  <!-- 复选框  -->
+                </option>
+              </select>
+            </span>
             </p>
           </div>
         </div>
@@ -43,7 +50,6 @@
 
 <script>
     export default{
-      props:['GroupId','UserId'],
       data(){
         return{
         
@@ -55,13 +61,18 @@
            marginTop:(window.innerHeight-385)/2+"px",
            height:"385px"
           },
+          UserRelationData:this.$store.state.UserRelationData,
+          UserData:this.$store.state.UserData,
           
           Name:'',
           Mail:'',
           Phone:'',
           
           GroupName:'',
-          Describe:''
+          Describe:'',
+          
+          GroupId:'',
+          Id:''
           
         }
       },
@@ -78,7 +89,8 @@
         modalChange () {
           this.$store.dispatch('ADD_USER_RELATE_CHANGE_AC')
         },
-        saveHandle (e) {
+        saveHandle () {
+          
         
       
           this.$store.dispatch({
@@ -89,15 +101,27 @@
             }
           })
           
-          alert('保存'+this.Name+'--'
-          +this.Mail+'---'
-          +this.Phone
+          alert('保存'+this.Name+'--'+this.Id+'|||'
+          +this.GroupName+'---'+this.GroupId
           )
         },
         resetHandle () {
           this.Name='';
-          this.Mail='';
-          this.Phone='';          
+          this.GroupName='';
+        },
+        groupSelectBlurHandle (e) {
+          let _this=e.target
+          let targetIndex=_this.selectedIndex;
+          let groupId=_this.options[targetIndex].getAttribute('mark')
+           this.GroupId=groupId
+           console.log(this.GroupId)
+        },
+        userSelectBlurHandle (e) {
+          let _this=e.target
+          let targetIndex=_this.selectedIndex;
+          let userId=_this.options[targetIndex].getAttribute('mark')
+          this.Id=userId
+          console.log(this.Id)
         }
       }
     }

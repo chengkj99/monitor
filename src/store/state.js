@@ -545,7 +545,7 @@ const SystemNameData=[
 const UserData=[
   {
     Id: 95,
-    Name: "mingren@",
+    Name: "mingren",
     Mail: "z@qq.com",
     Phone: "13000288800"
   },
@@ -585,7 +585,7 @@ const UserGroupData=[
 const UserRelationData=[
     {
       GroupName: "xiao",
-      GroupId: 0, 
+      GroupId: 22, 
       Users: 
         [
           {
@@ -610,7 +610,7 @@ const UserRelationData=[
     },
    {
      GroupName: "rename",
-     GroupId: 0,
+     GroupId: 11,
      Users: 
        [
          {
@@ -635,7 +635,7 @@ const UserRelationData=[
    }, 
   {
     GroupName: "cheng",
-    GroupId: 0,
+    GroupId: 333,
     Users:
       [
         {

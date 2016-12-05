@@ -6,7 +6,9 @@
       <!-- use $on and $emit -->
       <h3 class="title is-3">
         用户组用户关系管理管理
+        <img src="../assets/images/add-metric.svg" @click="addUserRelation"  />
       </h3>
+      
     </div>
     <div class="table-box">
       <table class="table">
@@ -24,7 +26,7 @@
         <tr class="tr-title">
           <td colspan="6">
             {{val.GroupName}}
-            <img src="../assets/images/add-metric.svg" @click="addUserRelation"  />
+            <!--<img src="../assets/images/add-metric.svg" @click="addUserRelation"  />-->
           </td>
         </tr>
 
@@ -47,7 +49,7 @@
     
 
     <div v-show="modalAddUserRelateShow">
-      <AddUserRelation :GroupId="GroupId" :UserId="Id" ></AddUserRelation>
+      <AddUserRelation></AddUserRelation>
     </div>
 
 

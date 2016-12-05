@@ -20,8 +20,17 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 ## 技术棧
 
 [ Node.js ](https://nodejs.org/en/)
+
 [ vue.js ](https://cn.vuejs.org/v2/api/)
+
 [ vue-resource ](https://github.com/pagekit/vue-resource)
+
 [ vue-router ](https://github.com/vuejs/vue-router)
+
+[ vuex ](https://github.com/vuejs/vuex)
+
 [ webpack ](http://webpack.github.io/)
+
+
+
 # monitor
