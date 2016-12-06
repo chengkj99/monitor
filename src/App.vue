@@ -57,6 +57,7 @@ export default {
       height: 100%;
       margin-left: 200px;
       padding-right: 30px;
+      padding-bottom: 100px;
     }
     
   }

@@ -174,6 +174,8 @@ const mutations = {
   
   //添加用户
   ADD_USER (state,payload) {
+    console.log('state.UserData:'+state.UserData)
+    console.log('state.UserData:'+payload.UserDataAdd)
     state.UserData.push(payload.UserDataAdd)
   },
   //修改用户

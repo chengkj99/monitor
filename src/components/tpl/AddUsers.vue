@@ -97,36 +97,33 @@
           this.$emit('modalChange')       
         },
         saveHandle (e) {
-        
-        if(this.componentName=='用户'){
-        
-          this.$store.dispatch({
-            type:'ADD_USER_AC',
-            amount:{
-              Name:this.Name,
-              Mail:this.Mail,
-              Phone:this.Phone
-            }
-          }).then((res) => {
-            console.log('wwww',res)
-          })
           
-        }else{
-          this.$store.dispatch({
-            type:'ADD_USER_GROUP_AC',
-            amount:{
-              Name:this.GroupName,
-              Describe:this.Describe
-            }
-          })
+          if(this.componentName=='用户'){
           
-        }
-
-
-          alert('保存'+this.Name+'--'
-          +this.Mail+'---'
-          +this.Phone
-          )
+            this.$store.dispatch({
+              type:'ADD_USER_AC',
+              amount:{
+                Name:this.Name,
+                Mail:this.Mail,
+                Phone:this.Phone
+              }
+            }).then((res) => {
+              if(res.data.code==200){
+                alert('用户添加成功！')
+              }
+            })
+            
+          }else{
+          
+            this.$store.dispatch({
+              type:'ADD_USER_GROUP_AC',
+              amount:{
+                Name:this.GroupName,
+                Describe:this.Describe
+              }
+            })
+            
+          }
         },
         resetHandle () {
           this.Name='';

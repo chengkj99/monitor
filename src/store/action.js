@@ -5,6 +5,7 @@ import Vue from 'vue'
 import resource from 'vue-resource'
 Vue.use(resource)
 import state  from './state'
+import store  from './index'
 
 //Vue.http.options.root = 'http://api.hhb.com';
 
@@ -309,15 +310,15 @@ const actions = {
 
   // 调用添加用户接口 payload.amount  :UserDataAdd
     console.log(payload.amount)
-
-    Vue.http.post('/api//v1/user/create',payload.amount).then( (res) => {
-      console.log('res now',res.data)
-      commit({
-        type:'GET_USER_MONITOR_RELATION',
-        UserMonitorRelationData:res.data
+    return new Promise((resolve, reject) => {
+      Vue.http.post('/api//v1/user/create',payload.amount).then( (res) => {
+        commit({
+          type:'ADD_USER',
+          UserDataAdd:payload.amount
+        })
+        resolve(res)
       })
     })
-    return Promise.resolve()
   },
   UPDATE_USER_AC ({ commit },payload) {
 
@@ -334,16 +335,25 @@ const actions = {
   },  
   DEL_USER_AC ({ commit },payload) {
 
-    // 调用删除用户数据接口 payload.amount  
+    //调用删除用户数据接口 payload.amount  /v1/user/del POST
     //查询更新数据 :UserData
     console.log(payload.amount)
-
-    commit({
-      type:'DEL_USER',
-      UserData:UserData
+    
+    return new Promise( (resolve, reject) => {
+      Vue.http.post('/api/v1/user/del',{},{
+        params:payload.amount
+      }).then(
+        res => res.data.code
+      ).then(
+        (code) => {
+          resolve(code)
+          
+          if(code==200){
+            store.dispatch('GET_USER_NAME_AC')
+          }
+        }
+      )
     })
-    return Promise.resolve()
-
   },
   
   /*---------------------------------------------用户组管理--------------------*/
@@ -503,15 +513,17 @@ const actions = {
 
     // 调用查询接口 查数据  :UserData
     // /v1/system/all
-    Vue.http.get('/api/v1/user/all').then( (res) => {
-      console.log('res',res.data)
-      commit({
-        type:'GET_USER_NAME',
-        UserData:res.data
-      })
+    return new Promise((resolve,reject) => {
+      Vue.http.get('/api/v1/user/all').then( (res) => {
+        commit({
+          type:'GET_USER_NAME',
+          UserData:res.data
+        })
+      }).then( 
+        res => resolve(res)
+      )
+      
     })
-    return Promise.resolve()
-
   }
 
 

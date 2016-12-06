@@ -129,8 +129,16 @@ import UsersUpdate from './UsersUpdate'
          if(this.componentName=='用户'){
            this.$store.dispatch({
              type:'DEL_USER_AC',
-             amount:itemId
-           })
+             amount:{
+              id:itemId
+             }
+           }).then(
+            res => {
+              if(res.data.code==200){
+                alert('删除成功！')
+              }
+            }
+           )
          
          }else{
            this.$store.dispatch({
@@ -138,7 +146,6 @@ import UsersUpdate from './UsersUpdate'
              amount:itemId
            })
          }
-        alert('删除'+itemId)
       },
       updateHandle (e) {
         var _this=e.target;
