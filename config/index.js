@@ -18,14 +18,14 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 8888,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       // proxy test cheng
 
       '/api': {
-        target: 'http://www.baidu.com',
+        target: 'http://192.168.92.92:8080',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

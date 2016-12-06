@@ -6,6 +6,8 @@ import resource from 'vue-resource'
 Vue.use(resource)
 import state  from './state'
 
+//Vue.http.options.root = 'http://api.hhb.com';
+
 
 
 
@@ -28,6 +30,18 @@ const actions = {
   },  
   ADD_USER_RELATE_CHANGE_AC({ commit }) {
     commit('ADD_USER_RELATE_CHANGE')
+    return Promise.resolve()
+  },  
+  ADD_MONITOR_RELATE_CHANGE_AC({ commit }) {
+    commit('ADD_MONITOR_RELATE_CHANGE')
+    return Promise.resolve()
+  },  
+  ADD_USER_ATTENDANCE_CHANGE_AC({ commit }) {
+    commit('ADD_USER_ATTENDANCE_CHANGE')
+    return Promise.resolve()
+  },  
+  USER_ATTENDANCE_UPDATE_CHANGE_AC({ commit }) {
+    commit('USER_ATTENDANCE_UPDATE_CHANGE')
     return Promise.resolve()
   },
   
@@ -295,12 +309,15 @@ const actions = {
 
   // 调用添加用户接口 payload.amount  :UserDataAdd
     console.log(payload.amount)
-    commit({
-      type:'ADD_USER',
-      UserDataAdd:payload.amount
+
+    Vue.http.post('/api//v1/user/create',payload.amount).then( (res) => {
+      console.log('res now',res.data)
+      commit({
+        type:'GET_USER_MONITOR_RELATION',
+        UserMonitorRelationData:res.data
+      })
     })
     return Promise.resolve()
-
   },
   UPDATE_USER_AC ({ commit },payload) {
 
@@ -333,6 +350,8 @@ const actions = {
   ADD_USER_GROUP_AC ({ commit },payload) {
 
     // 调用添加用户接口 payload.amount  :UserGroupData
+    // /v1/user/create POST
+
     console.log(payload.amount)
 
     commit({
@@ -368,6 +387,96 @@ const actions = {
     return Promise.resolve()
 
   },
+  /*---------------------------------------------用户组用户关系管理--------------------*/
+  
+  ADD_USER_RELATION_AC ({ commit },payload) {
+
+    // 调用添加用户组用户关系接口 payload.amount  :UserRelationDataAdd
+    console.log(payload.amount)
+
+    commit({
+      type:'ADD_USER_RELATION',
+      UserRelationDataAdd:payload.amount
+    })
+    return Promise.resolve()
+  },
+  DEL_USER_RELATION_AC ({ commit },payload) {
+
+    // 调用删除用户组用户关系数据接口 payload.amount  
+    //查询更新数据 :UserRelationData
+    console.log(payload.amount)
+
+    commit({
+      type:'DEL_USER_RELATION',
+      UserRelationData:state.UserRelationData
+    })
+    return Promise.resolve()
+
+  },  /*---------------------------------------------用户组监控项关系管理--------------------*/
+ 
+  GET_USER_MONITOR_RELATION_AC ({ commit }) {
+    // http://192.168.92.92:8080/v1/groupmetric/all
+    // 调用添加用户组用户关系接口 payload.amount  :UserMonitorRelationData
+    // console.log(Vue.http)
+   Vue.http.get('/api/v1/groupmetric/all').then( (res) => {
+      console.log('res',res.data)
+      commit({
+        type:'GET_USER_MONITOR_RELATION',
+        UserMonitorRelationData:res.data
+      })
+    })
+  },
+  ADD_USER_MONITOR_RELATION_AC ({ commit },payload) {
+
+    // 调用添加用户组监控项关系接口 payload.amount  :UserMonitorRelationDataAdd
+    console.log(payload.amount)
+
+    commit({
+      type:'ADD_USER_MONITOR_RELATION',
+      UserMonitorRelationDataAdd:payload.amount
+    })
+    return Promise.resolve()
+  },
+  DEL_USER_MONITOR_RELATION_AC ({ commit },payload) {
+
+    // 调用删除用户组监控项关系数据接口 payload.amount  
+    //查询更新数据 :UserMonitorRelationData
+    console.log(payload.amount)
+    commit({
+      type:'DEL_USER_MONITOR_RELATION',
+      UserMonitorRelationData:state.UserMonitorRelationData
+    })
+    return Promise.resolve()
+
+  },
+  
+  /*---------------------------------------------值班管理--------------------*/
+
+  GET_USER_ATTENDANCE_AC ({ commit }) {
+    // 调用添加用户组用户关系接口 payload.amount  :UserAttendanceData
+    // console.log(Vue.http)
+    Vue.http.get('/api/v1/schedule/current').then( (res) => {
+      console.log('res',res.data)
+      commit({
+        type:'GET_USER_ATTENDANCE',
+        UserAttendanceData:res.data
+      })
+    })
+  },  
+  UPDATE_USER_ATTENDANCE_AC ({ commit },payload) {
+    // 调用修改接口 payload.amount  :UserAttendanceData
+    // 调用获取数据接口 :UserAttendanceData
+    console.log(payload.amount)
+    /*
+    Vue.http.get('/api/v1/schedule/current').then( (res) => {
+      console.log('res',res.data)
+      commit({
+        type:'UPDATE_USER_ATTENDANCE',
+        UserAttendanceData:res.data
+      })
+    })
+    */
+  },
   
   
   
@@ -378,9 +487,28 @@ const actions = {
 
     // 调用查询接口 查数据  :SystemNameData
 
-    commit({
-      type:'GET_SYSTEM_NAME',
-      SystemNameData:state.SystemNameData
+    // /v1/system/all
+    Vue.http.get('/api/v1/system/all').then( (res) => {
+      console.log('res',res.data)
+      commit({
+        type:'GET_SYSTEM_NAME',
+        SystemNameData:res.data
+      })
+    })
+    return Promise.resolve()
+
+  },
+  // 查询所有用户
+  GET_USER_NAME_AC ({ commit },payload) {
+
+    // 调用查询接口 查数据  :UserData
+    // /v1/system/all
+    Vue.http.get('/api/v1/user/all').then( (res) => {
+      console.log('res',res.data)
+      commit({
+        type:'GET_USER_NAME',
+        UserData:res.data
+      })
     })
     return Promise.resolve()
 

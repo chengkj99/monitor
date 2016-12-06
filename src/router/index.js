@@ -19,6 +19,8 @@ import UserMonitorRelation from '../components/UserMonitorRelation'
 import Blacklist from '../components/Blacklist'
 import UpgradeRule from '../components/UpgradeRule'
 import UserRelation from '../components/UserRelation'
+import MultiSelectTest from '../components/tpl/MultiSelectTest'
+import Test from '../components/test'
 
 Vue.use(Router)
 
@@ -66,11 +68,16 @@ const routes = [
   {
     path: '/hello',
     component: Hello
-  },
+  },  
   {
     path: '/test',
-    name: 'test',
-    component: test
+    component: Test
+  },
+
+  {
+    path: '/selectTest',
+    name: 'selectTest',
+    component: MultiSelectTest
   },
   {
     path: '/Blacklist',

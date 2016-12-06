@@ -519,7 +519,38 @@ const ModalDetailsData=[
 
 const SystemNameData=[]
 
-const UserData=[]
+const UserData=[
+  {
+    Id: 95,
+    Name: "mingren",
+    Mail: "z@qq.com",
+    Phone: "13000288800"
+  },
+  {
+    Id: 127,
+    Name: "zuozhu",
+    Mail: "z@qq.com",
+    Phone: "13000288800"
+  },
+  {
+    Id: 128,
+    Name: "zuozhu2",
+    Mail: "z@qq.com",
+    Phone: "13000288800"
+  },
+  {
+    Id: 129,
+    Name: "zuozhu3",
+    Mail: "z@qq.com",
+    Phone: "13000288800"
+  },
+  {
+    Id: 130,
+    Name: "zuozhu4",
+    Mail: "zll@qq.com",
+    Phone: "13000288800"
+  }
+]
 
 const UserGroupData=[
   {

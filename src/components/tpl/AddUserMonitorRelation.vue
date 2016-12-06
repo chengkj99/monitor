@@ -1,56 +1,52 @@
-<!-- 添加用户 组件 -->
+<!-- 添加用户组监控项关系 组件 -->
 
 
 <template>
   <div id="modal-add-users" @click.self="modalChange" >
-    <div class="container"  id="table-box" :style="componentName=='用户' ? tableBoxStyle : tableBoxStyleTwo" >
-      <h3 class="title is-4">添加{{componentName}}</h3>
+    <div class="container"  id="table-box" :style=" tableBoxStyle " >
+      <h3 class="title is-4">添加用户组关系</h3>
 
-      <template v-if="componentName=='用户'">
-        <div>
-          <div>
-            <label class="label">姓名＊</label>
-            <p class="control">
-              <input class="input" type="text" v-model="Name" placeholder="姓名">
-            </p>
-          </div>
-
-          <div>
-            <label class="label">邮箱＊</label>
-            <p class="control">
-              <input class="input" type="text" v-model="Mail" placeholder="邮箱">
-            </p>
-          </div>
-          <div>
-            <label class="label">电话＊</label>
-            <p class="control">
-              <input class="input" type="text" v-model="Phone" placeholder="电话">
-            </p>
-          </div>
-        </div>
-        
-      </template>
-      
-      
-      <template v-else>
         <div>
           <div>
             <label class="label">用户组名称＊</label>
             <p class="control">
-              <input class="input" type="text" v-model="GroupName" placeholder="用户组名称">
+            <span class="select" >
+              <select v-model="GroupMonitorName" @blur="groupSelectBlurHandle">
+                <option v-for="val in UserMonitorRelationData"  :mark="val.GroupId">
+                  {{val.GroupName}}
+                </option>
+              </select>
+            </span>
             </p>
           </div>
-
           <div>
-            <label class="label">描述</label>
+            <label class="label">来源系统名称＊</label>
             <p class="control">
-              <textarea class="textarea" v-model="Describe" placeholder="描述"></textarea>
+            <span class="select" >
+              <select v-model="SystemName">
+                <option v-for="val in SystemNameData">
+                  {{val.SystemName}}
+                </option>
+              </select>
+            </span>
+            </p>
+          </div>          
+          <div>
+            <label class="label">监控项名称＊</label>
+            <p class="control">
+            <span class="select" >
+              <select v-model="MonitorName">
+                <option v-for="val in SystemNameData" :data-groupId="val.Id" :mark="val.Id">
+                  {{val.SystemName}}
+                </option>
+              </select>
+            </span>
             </p>
           </div>
-        </div>
-      </template>
 
-      
+        </div>
+
+
       <div class="renameDo">
         <a class="button" @click="resetHandle">重置</a>
         <a class="button" @click="saveHandle">保存</a>
@@ -60,78 +56,70 @@
 </template>
 
 <script>
-    export default{
-      props:['componentName'],
+
+  export default{
       data(){
         return{
         
           tableBoxStyle:{
-           marginTop:(window.innerHeight-365)/2+"px",
-           height:"365px"
+           marginTop:(window.innerHeight-375)/2+"px",
+           height:"375px"
           },          
           tableBoxStyleTwo:{
            marginTop:(window.innerHeight-385)/2+"px",
            height:"385px"
           },
+          UserRelationData:this.$store.state.UserRelationData,
           
-          Name:'',
-          Mail:'',
-          Phone:'',
+          UserMonitorRelationData:'',
+          SystemNameData:'',
           
-          GroupName:'',
-          Describe:''
           
+          SystemName:'',
+          GroupMonitorName:'',
+          MonitorName:'',
+          
+          GroupId:'',
+          Id:'',
         }
       },
       watch:{
 
       },
       computed:{
-        
+        UserMonitorRelationData () {
+          return this.$store.state.UserMonitorRelationData;
+        },      
+        SystemNameData () {
+          return this.$store.state.SystemNameData;
+        }
       },
       methods:{
-        isNumber (val) {
-          return typeof val === 'number' && isFinite(val);
-        },
         modalChange () {
-          this.$emit('modalChange')       
+          this.$store.dispatch('ADD_MONITOR_RELATE_CHANGE_AC')
         },
-        saveHandle (e) {
-        
-        if(this.componentName=='用户'){
-        
-          this.$store.dispatch({
-            type:'ADD_USER_AC',
-            amount:{
-              Name:this.Name,
-              Mail:this.Mail,
-              Phone:this.Phone
-            }
-          }).then((res) => {
-            console.log('wwww',res)
-          })
+        saveHandle () {
           
-        }else{
           this.$store.dispatch({
-            type:'ADD_USER_GROUP_AC',
+            type:'ADD_USER_MONITOR_RELATION_AC',
             amount:{
-              Name:this.GroupName,
-              Describe:this.Describe
+              GroupId:this.GroupId,
+              SystemName:this.SystemName,
+              metric:this.MonitorName
             }
           })
-          
-        }
-
-
-          alert('保存'+this.Name+'--'
-          +this.Mail+'---'
-          +this.Phone
-          )
         },
         resetHandle () {
           this.Name='';
-          this.Mail='';
-          this.Phone='';          
+          this.GroupMonitorName='';
+        },
+
+        groupSelectBlurHandle (e) {
+          let _this=e.target
+          let targetIndex=_this.selectedIndex;
+          let groupId=_this.options[targetIndex].getAttribute('mark')
+           this.GroupId=groupId
+           console.log(this.GroupId)
         }
       }
     }
@@ -154,7 +142,7 @@
     bottom: 0;
 
     .container{
-      width: 350px;
+      width: 385px;
       position: relative;
       display: block;
       overflow: auto;
@@ -230,6 +218,25 @@
         >a{
           width: 45%;
         }
+      }
+    }
+
+    #multi-select-box{
+      span{
+        display: inline-block;
+      }
+
+      .multiselect__content{
+
+        span{
+          display: block;
+        }
+        position:fixed;
+        width: 307px;
+      }
+      .multiselect__tags{
+
+        height: 100px;
       }
     }
 

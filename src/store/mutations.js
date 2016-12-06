@@ -4,7 +4,7 @@
 
 
 const mutations = {
-
+  /*---------------------------------------------显示隐藏--------------------*/
   //查看历史组件显示隐藏
   MODAL_CHANGE (state) {
     if(state.modalShow==false){
@@ -44,9 +44,34 @@ const mutations = {
     }else{
       state.modalAddUserRelateShow=false;
     }
+  },  
+  //添加用户组用户关系组件显示隐藏
+  ADD_MONITOR_RELATE_CHANGE (state) {
+    if(state.modalAddUserMonitorRelationShow==false){
+      state.modalAddUserMonitorRelationShow=true;
+    }else{
+      state.modalAddUserMonitorRelationShow=false;
+    }
+  },  
+  //添加值班显示隐藏
+  ADD_USER_ATTENDANCE_CHANGE (state) {
+    if(state.modalAddUserAttendanceShow==false){
+      state.modalAddUserAttendanceShow=true;
+    }else{
+      state.modalAddUserAttendanceShow=false;
+    }
+  },  
+  //修改值班显示隐藏
+  USER_ATTENDANCE_UPDATE_CHANGE (state) {
+    if(state.modalUserAttendanceUpdateShow==false){
+      state.modalUserAttendanceUpdateShow=true;
+    }else{
+      state.modalUserAttendanceUpdateShow=false;
+    }
   },
-  
-  
+
+  /*---------------------------------------------黑名单--------------------*/
+
   //添加黑名单
   ADD_BACK_LIST (state,payload) {
     state.BackListData.push(payload.listDataAdded)
@@ -59,9 +84,10 @@ const mutations = {
   //获取黑名单
   GET_BACK_LIST (state,payload){
     state.BackListData=payload.BackListData
-  }, 
-  
-  
+  },
+
+  /*---------------------------------------------升级规则--------------------*/
+
   //获取升级规则
   GET_RULE_LIST (state,payload){
     state.RuleListData=payload.RuleListData
@@ -75,7 +101,8 @@ const mutations = {
     state.RuleListData=payload.RuleListData
   },
 
-  
+  /*---------------------------------------------监控项--------------------*/
+
   //获取监控项数据
   GET_MONITOR_ITEM (state,payload) {
     state.MonitorItemData=payload.MonitorItemData
@@ -96,7 +123,9 @@ const mutations = {
   CONFIRM_MONITOR_ITEM (state,payload) {
     state.MonitorItemData=payload.MonitorItemData
   },
-
+  
+  /*---------------------------------------------来源系统--------------------*/
+  
 //AlarmSource.vue
   //获取来源系统数据AlarmSourceData: Array[3]
   GET_ALARM_SOURCE (state,payload) {
@@ -119,6 +148,7 @@ const mutations = {
     state.AlarmSourceData=payload.AlarmSourceData
   },
 
+  /*---------------------------------------------报警信息--------------------*/
 
   //获取来源系统数据AlarmSourceData: Array[3]
   GET_ALARM (state,payload) {
@@ -140,6 +170,7 @@ const mutations = {
     state.AlarmData=payload.AlarmData
   },
 
+  /*---------------------------------------------用户--------------------*/
   
   //添加用户
   ADD_USER (state,payload) {
@@ -153,8 +184,9 @@ const mutations = {
   DEL_USER (state,payload) {
     state.UserData=payload.UserData
   },
-  
-  
+
+  /*---------------------------------------------用户组--------------------*/
+
   //添加用户组
   ADD_USER_GROUP (state,payload) {
     state.UserGroupData.push(payload.UserGroupDataAdd)
@@ -168,11 +200,54 @@ const mutations = {
     state.UserGroupData=payload.UserGroupData
   },
 
+  /*---------------------------------------------用户组用户关系--------------------*/
 
+  //添加用户组用户关系
+  ADD_USER_RELATION (state,payload) {
+    state.UserRelationData.push(payload.UserRelationDataAdd)
+  },
+  //删除用户组用户关系
+  DEL_USER_RELATION (state,payload) {
+  state.UserRelationData=payload.UserRelationData
+  },  
+  
+  /*---------------------------------------------用户组监控项关系--------------------*/
+
+  //添加用户组用户关系
+  GET_USER_MONITOR_RELATION (state,payload) {
+    state.UserMonitorRelationData=payload.UserMonitorRelationData;
+  },
+  //删除用户组用户关系
+  DEL_USER_MONITOR_RELATION (state,payload) {
+  state.UserMonitorRelationData=payload.UserMonitorRelationData
+  },  
+  //删除用户组用户关系
+  ADD_USER_MONITOR_RELATION (state,payload) {
+    state.UserMonitorRelationData.push(payload.UserMonitorRelationDataAdd)
+  },  
+  
+  /*---------------------------------------------值班管理--------------------*/
+
+  //获取值班管理数据
+  GET_USER_ATTENDANCE (state,payload) {
+    state.UserAttendanceData=payload.UserAttendanceData;
+  },  
+  //修改值班管理数据
+  UPDATE_USER_ATTENDANCE (state,payload) {
+    state.UserAttendanceData=payload.UserAttendanceData;
+  },
+
+
+
+  /*---------------------------------------------公共--------------------*/
 
   //获取来源系统名称
   GET_SYSTEM_NAME (state,payload) {
     state.SystemNameData=payload.SystemNameData
+  },
+  //获取所有用户
+  GET_USER_NAME (state,payload) {
+    state.UserData=payload.UserData
   }
 
 

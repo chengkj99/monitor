@@ -27,6 +27,8 @@ export default {
   },
   mounted () {
     this.$store.dispatch('GET_SYSTEM_NAME_AC')
+    this.$store.dispatch('GET_USER_NAME_AC')
+    
   }
 }
 

@@ -5,7 +5,7 @@
     <div class="monitor-alarm-box">
       <!-- use $on and $emit -->
       <h3 class="title is-3">
-        用户组用户关系管理管理
+        用户组用户关系管理
         <img src="../assets/images/add-metric.svg" @click="addUserRelation"  />
       </h3>
       
@@ -58,21 +58,13 @@
 
 
 <script>
-import Rename from './tpl/Rename'
-import AddMonitorItem from './tpl/AddMonitorItem'
 import AddUserRelation from './tpl/AddUserRelation'
 
   export default {
-  /* componentName:监控项,来源系统 */
   
     data () {
       return {
-        modalAddMonitorItemShow:false,
-        
-        metricName:'',
-        sysName:'',
-        renameId:'',
-        
+      
         GroupId:'',
         Id:'',
         modalAddUserRelateShow:false,
@@ -84,18 +76,15 @@ import AddUserRelation from './tpl/AddUserRelation'
     
       deleteHandle (e) {
         let itemId=e.target.dataset.id;
-        if(this.componentName=='监控项'){
+        let groupId=e.target.dataset.groupid;
           this.$store.dispatch({
-            type:'DEL_MONITOR_ITEM_AC',
-            amount:itemId
+            type:'DEL_USER_RELATION_AC',
+            amount:{
+            GroupId:groupId,
+            Id:itemId
+            }
           })
-        }else{
-          this.$store.dispatch({
-            type:'DEL_ALARM_SOURCE_AC',
-            amount:itemId
-          })
-        }
-        alert('删除'+itemId)
+        alert('删除del:'+itemId+'----'+groupId)
       },
       addUserRelation () {
         this.$store.dispatch('ADD_USER_RELATE_CHANGE_AC')
@@ -106,20 +95,7 @@ import AddUserRelation from './tpl/AddUserRelation'
         return this.$store.state.modalAddUserRelateShow
       }
     },
-    filters: {
-      ConfirmState (val) {
-        let value;
-        if(val==false){
-          value='未确认'
-        }else{
-          value='已确认'
-        }
-        return value;
-      }
-    },
     components:{
-      Rename,
-      AddMonitorItem,
       AddUserRelation
     }
             

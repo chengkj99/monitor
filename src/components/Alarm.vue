@@ -24,7 +24,7 @@
         <div>
           <label class="label">监控节点：</label>
           <p class="control">
-            <input class="input" type="text" v-model="endpoint" placeholder="Text input">
+            <input class="input" type="text" v-model="endpoint" placeholder="监控节点">
           </p>
         </div>
         <div>
@@ -32,8 +32,9 @@
           <p class="control">
           <span class="select">
             <select v-model="metricName">
-              <option>Select dropdown</option>
-              <option>With options</option>
+              <option v-for="val in selectMetric" >
+                {{ val.MetricName }}
+              </option>
             </select>
           </span>
           </p>
@@ -102,7 +103,8 @@ import ModalDetails from './tpl/ModalDetails'
   data () {
     return {
       name: 'alarm-node',
-      selectSysName:this.$store.state.SystemNameData,          
+      selectSysName:[],
+      selectMetric:[],
       
       sysName:'',
       endpoint:'',
@@ -119,6 +121,17 @@ import ModalDetails from './tpl/ModalDetails'
       listData:[]
     }
   },
+  watch: {
+    sysName (val) {
+      this.$http.get('/api/v1/metric/search?systemName='+val).then((res) => {
+          this.selectMetric=res.data;
+          console.log('selectMetric:::',this.selectMetric)
+          
+      }, (res) => {
+          console.log('error res:::'+res)
+      });  
+    }
+  },
   computed: {
     modalShow () {
       return this.$store.state.modalShow
@@ -128,6 +141,9 @@ import ModalDetails from './tpl/ModalDetails'
     },
     listData () {
       return this.$store.state.AlarmData
+    },
+    selectSysName () {
+      return this.$store.state.SystemNameData
     }
   },
   mounted () {
@@ -176,7 +192,7 @@ import ModalDetails from './tpl/ModalDetails'
     },
     createUrl (unit) {
       return unit.page > 1?'#page=' + unit.page:'#'
-    }  
+    }
   
   },
   components:{

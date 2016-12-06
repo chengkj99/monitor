@@ -23,11 +23,13 @@ import UserAndUserGroup from './tpl/UserAndUserGroup'
   
     data () {
       return {
-        listData:this.$store.state.UserData
+        listData:[]
       }
     },
     computed:{
-
+      listData () {
+        return this.$store.state.UserData
+      }
     },
     methods:{
     

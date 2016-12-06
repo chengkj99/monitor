@@ -1,46 +1,69 @@
-<!-- 添加用户组用户关系 组件 -->
+<!-- 添加用户组监控项关系 组件 -->
 
 
 <template>
-  <div id="modal-add-users" @click.self="modalChange" >
+  <div id="modal－update-attendance" @click.self="modalChange" >
     <div class="container"  id="table-box" :style=" tableBoxStyle " >
-      <h3 class="title is-4">添加用户组关系</h3>
+      <h3 class="title is-4">添加值班</h3>
 
-      <template>
+      <div>
         <div>
-          <div id="user-group-select-box">
-            <label class="label">用户组名称＊</label>
-            <p class="control">
+          <label class="label">用户组名称＊</label>
+          <p class="control">
             <span class="select" >
               <select v-model="GroupName" @blur="groupSelectBlurHandle">
-                <option v-for="val in UserRelationData" :data-groupId="val.GroupId" :mark="val.GroupId">
-                  {{val.GroupName}}
+                <option v-for="val in UserGroupData"  :mark="val.GroupId">
+                  {{val.Name}}
                 </option>
               </select>
             </span>
-            </p>
-          </div>
-
-          <!-- :close-on-select="false" -->
-          <!-- :clear-on-select="false" -->
-          
-          <div id="user-select-box">
-            <label class="label">用户名＊</label>
-            <p id="multi-select-box">
-              <multiselect
-                :options="options"
-                :value="selectedData"
-                :multiple="true"
-                :limit="4"
-                @input="updateMultiValue"
-                :searchable="true"
-              >
-              </multiselect>
-            </p>
-          </div>
+          </p>
+        </div>
+        <div>
+          <label class="label">时间＊</label>
+          <p class="control">
+            <input class="input" type="date" v-model="dateTime">
+          </p>
+        </div>
+        <div>
+          <label class="label">责任人＊</label>
+          <p class="control">
+            <span class="select" >
+              <select v-model="Duty">
+                <option v-for="val in UserData" :data-groupId="val.Id" :mark="val.Id">
+                  {{val.Name}}
+                </option>
+              </select>
+            </span>
+          </p>
+        </div>       
+        <div>
+          <label class="label">第二责任人＊</label>
+          <p class="control">
+            <span class="select" >
+              <select v-model="Backup">
+                <option v-for="val in UserData" :data-groupId="val.Id" :mark="val.Id">
+                  {{val.Name}}
+                </option>
+              </select>
+            </span>
+          </p>
+        </div>        
+        <div>
+          <label class="label">负责人＊</label>
+          <p class="control">
+            <span class="select" >
+              <select v-model="Charge">
+                <option v-for="val in UserData" :data-groupId="val.Id" :mark="val.Id">
+                  {{val.Name}}
+                </option>
+              </select>
+            </span>
+          </p>
         </div>
 
-      </template>
+      </div>
+
 
       <div class="renameDo">
         <a class="button" @click="resetHandle">重置</a>
@@ -51,81 +74,55 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect'
 
   export default{
-     components: { Multiselect },
       data(){
         return{
         
           tableBoxStyle:{
-           marginTop:(window.innerHeight-375)/2+"px",
-           height:"375px"
-          },          
-          tableBoxStyleTwo:{
-           marginTop:(window.innerHeight-385)/2+"px",
-           height:"385px"
-          },
-          UserRelationData:this.$store.state.UserRelationData,
-          UserData:this.$store.state.UserData,
-          
-          Name:'',
-          Mail:'',
-          Phone:'',
+           marginTop:(window.innerHeight-500)/2+"px",
+           height:"500px"
+          },        
+          UserGroupData:[],
+          UserData:[],
           
           GroupName:'',
-          Describe:'',
+          dateTime:'',
+          Duty:'',
+          Backup:'',
+          Charge:'',
           
           GroupId:'',
           Id:'',
-          
-        selectedData:'',
-        options: [],
-        UserData:''
-          
         }
       },
       watch:{
 
       },
       computed:{
+        UserGroupData () {
+          return this.$store.state.UserGroupData;
+        },            
         UserData () {
           return this.$store.state.UserData;
-        },
-        options () {
-          let arr=[];
-          this.UserData.map((it,index)=>{
-            arr.push(it.Name+'#'+it.Id)
-          })
-          return arr;
         }
-        
       },
       methods:{
-        isNumber (val) {
-          return typeof val === 'number' && isFinite(val);
-        },
         modalChange () {
-          this.$store.dispatch('ADD_USER_RELATE_CHANGE_AC')
+          this.$store.dispatch('ADD_USER_ATTENDANCE_CHANGE_AC')
         },
         saveHandle () {
-         
-          let UserIdArr=[]
-          this.selectedData.map( (it) => {
-            UserIdArr.push(it.split('#')[1])
-          })
           
           this.$store.dispatch({
-            type:'ADD_USER_RELATION_AC',
+            type:'ADD_USER_MONITOR_RELATION_AC',
             amount:{
-              GroupId:this.GroupId,
-              UserId:UserIdArr
+              GroupName:this.GroupName,
+              Date:this.Date,
+              Duty:this.Duty,
+              Backup:this.Backup,
+              Charge:this.Charge,
             }
           })
-          
-          alert('保存'+this.Name+'--'+this.Id+'|||'
-          +this.GroupName+'---'+this.GroupId
-          )
         },
         resetHandle () {
           this.Name='';
@@ -138,18 +135,7 @@ import Multiselect from 'vue-multiselect'
           let groupId=_this.options[targetIndex].getAttribute('mark')
            this.GroupId=groupId
            console.log(this.GroupId)
-        },
-        userSelectBlurHandle (e) {
-          let _this=e.target
-          let targetIndex=_this.selectedIndex;
-          let userId=_this.options[targetIndex].getAttribute('mark')
-          this.Id=userId
-          console.log(this.Id)
-        },
-        updateMultiValue (value) {
-          this.selectedData = value
-          console.log(this.selectedData)
-        },
+        }
       }
     }
 </script>
@@ -158,7 +144,7 @@ import Multiselect from 'vue-multiselect'
   @import "../../assets/css/style";
 
 
-  #modal-add-users{
+  #modal－update-attendance{
     position: fixed;
     background-color: rgba($background , 0.3);
     width: 100%;
@@ -212,17 +198,6 @@ import Multiselect from 'vue-multiselect'
           p{
             display:block;
             width: 100%;
-            input[type='number']{
-              display: inline-block;
-              width: 205px;
-              margin-right: 10px;
-            }
-            input[type='number']+span{
-              display: inline-block;
-              font-size: 18px;
-              line-height: 32px;
-              text-align: center;
-            }
             span {
               display: block;
               position: relative;
@@ -249,14 +224,14 @@ import Multiselect from 'vue-multiselect'
         }
       }
     }
-    
+
     #multi-select-box{
       span{
         display: inline-block;
       }
-      
+
       .multiselect__content{
-        
+
         span{
           display: block;
         }
@@ -264,7 +239,7 @@ import Multiselect from 'vue-multiselect'
         width: 307px;
       }
       .multiselect__tags{
-        
+
         height: 100px;
       }
     }

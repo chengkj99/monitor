@@ -1,6 +1,6 @@
 <template>
   <div id="modal-rename" @click.self="modalChange" >
-    <div class="container"  id="table-box" :style=" tableBoxStyle ">
+    <div class="container"  id="table-box" :style=" componentName=='用户' ? tableBoxStyle : tableBoxStyleTwo ">
       <!-- 监控项 -->
         <h3 class="title is-4">修改{{componentName}}名称</h3>
 
@@ -59,6 +59,10 @@
           tableBoxStyle:{
            marginTop:(window.innerHeight-395)/2+"px",
            height:'395px'
+          },          
+          tableBoxStyleTwo:{
+           marginTop:(window.innerHeight-320)/2+"px",
+           height:'320px'
           },
           newName:'',
           newEmail:'',
