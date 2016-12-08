@@ -127,8 +127,6 @@
             }
           })
         }
-
-          alert("保存:"+this.newName+'//'+this.newEmail+"//"+this.newPhone+"//"+this.newGroupName+"//"+this.newDescribe)
         }
       }
     }
