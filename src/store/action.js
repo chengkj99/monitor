@@ -26,8 +26,8 @@ const actions = {
     return Promise.resolve()
   }, 
   USER_UPDATE_CHANGE_AC({ commit }) {
-    commit('USER_UPDATE_CHANGE')
-    return Promise.resolve()
+     commit('USER_UPDATE_CHANGE')
+     return Promise.resolve()    
   },  
   ADD_USER_RELATE_CHANGE_AC({ commit }) {
     commit('ADD_USER_RELATE_CHANGE')
@@ -242,26 +242,30 @@ const actions = {
   GET_ALARM_AC ({ commit }) {
 
     // 调用查询接口 查数据 :AlarmData
-
-    commit({
-      type:'GET_ALARM',
-      AlarmData:state.AlarmData
-    })
-    return Promise.resolve()
-
+   return new Promise((resolve,reject)=>{
+     Vue.http.get("/api/v1/alarm/search").then(
+      (res) =>  {
+      commit({
+        type:'GET_ALARM',
+        AlarmData:res.data
+      })
+      resolve(res)
+      })
+   }) 
   },
   // 按条件查询数据
   QUERY_ALARM_AC ({ commit },payload) {
-
     // 调用查询接口 查数据 payload.amount :AlarmData
-    console.log(payload.amount)
-
-    commit({
-      type:'QUERY_ALARM',
-      AlarmData:state.AlarmData
+    return new Promise((resolve,reject) =>{
+      Vue.http.get("/api/v1/alarm/search",{params:payload.amount})
+      .then( (res) =>{
+            commit({
+            type:'QUERY_ALARM',
+            AlarmData:res.data
+            })
+    resolve(res)
     })
-    return Promise.resolve()
-
+    })  
   },  
   // 查看来源系统详情数据
   DETAILS_ALARM_AC ({ commit },payload) {
@@ -325,12 +329,22 @@ const actions = {
     // 调用修改用户数据接口 payload.amount  
     //查询更新数据 :UserData
     console.log(payload.amount)
-
-    commit({
-      type:'UPDATE_USER',
-      UserData:UserData
+    return new Promise((resolve,reject)=>{
+      Vue.http.post("/api/v1/user/update",payload.amount,{}).then(
+        res => {
+          console.log('update res',res)
+        return res.data.code
+        }
+      ).then(
+        (code) => {
+          resolve(code)
+          if(code==200){
+            store.dispatch('GET_USER_NAME_AC')
+          }
+        }
+      )
     })
-    return Promise.resolve()
+    
 
   },  
   DEL_USER_AC ({ commit },payload) {

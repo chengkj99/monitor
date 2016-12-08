@@ -58,7 +58,7 @@
             <a class="button is-small" @click="deleteHandle" :data-id="v.Id">删除</a>
             <a class="button is-small" @click="updateHandle"
                :data-group="v.Name"
-               :data-describe="v.Describe">修改</a>
+               :data-describe="v.Describe" :data-id="v.Id">修改</a>
           </td>
         </tr>
         </tbody>
@@ -80,6 +80,7 @@
     
     <div v-show="modalUserUpdateShow">
       <UsersUpdate :componentName="componentName" 
+                   :Id="Id"
                    :Name="Name"
                    :Email="Mail"
                    :Phone="Phone"
@@ -106,11 +107,10 @@ import UsersUpdate from './UsersUpdate'
       return {
         modalAddShow:false,
         modalUserUpdateShow:false,
-        
+        Id:'',
         Name:'',
         Mail:'',
-        Phone:'',
-        
+        Phone:'',      
         GroupName:'',
         Describe:''
       }
@@ -149,6 +149,7 @@ import UsersUpdate from './UsersUpdate'
       },
       updateHandle (e) {
         var _this=e.target;
+        this.Id=_this.dataset.id;
         this.Name=_this.dataset.name;       
         this.Mail=_this.dataset.mail;
         this.Phone=_this.dataset.phone;
