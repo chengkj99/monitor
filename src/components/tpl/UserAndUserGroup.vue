@@ -124,6 +124,11 @@ import UsersUpdate from './UsersUpdate'
     methods: {
     
       deleteHandle (e) {
+
+        let isConfirm =  confirm("确定删除？")
+        if (!isConfirm){
+          return
+        }
               //通过componentName判定派发哪个actions
         let itemId=e.target.dataset.id; 
          if(this.componentName=='用户'){
@@ -143,8 +148,16 @@ import UsersUpdate from './UsersUpdate'
          }else{
            this.$store.dispatch({
              type:'DEL_USER_GROUP_AC',
-             amount:itemId
-           })
+             amount:{
+               id:itemId
+             }
+           }).then(
+            res => {
+              if(res==200){
+                alert('删除成功！')
+              }
+            }
+           )
          }
       },
       updateHandle (e) {
@@ -157,7 +170,9 @@ import UsersUpdate from './UsersUpdate'
         this.Describe=_this.dataset.describe;
         console.log('user:'+this.Name+'//'+this.Mail+'//'+this.Phone)
         console.log('userGroup:'+'//'+this.GroupName+'//'+this.Describe)
-        this.$store.dispatch('USER_UPDATE_CHANGE_AC')
+        
+       this.$store.dispatch('USER_UPDATE_CHANGE_AC')
+         
           
       },
       addUsers () {

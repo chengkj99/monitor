@@ -98,19 +98,27 @@
             amount:{
               Id:Number(this.Id),
               Name:this.newName,
-              Email:this.newEmail,
+              Mail:this.newEmail,
               Phone:this.newPhone
             }
-          })
-          console.log("user update data:",this.newName)
+          }).then(
+            ()=>{
+              this.$store.dispatch('USER_UPDATE_CHANGE_AC')
+            }
+          )
         }else{
           this.$store.dispatch({
-            type:'UPDATE_USER_GROUP_AC',
-            amount:{
-              GroupName:this.newGroupName,
-              Describe:this.newDescribe
+              type:'UPDATE_USER_GROUP_AC',
+              amount:{
+                Id:Number(this.Id),
+                Name:this.newGroupName,
+                Describe:this.newDescribe
+              }
+          }).then(
+            ()=>{
+              this.$store.dispatch('USER_UPDATE_CHANGE_AC')
             }
-          })
+          )
         }
         }
       }

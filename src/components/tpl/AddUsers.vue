@@ -109,6 +109,7 @@
               }
             }).then((res) => {
               if(res.data.code==200){
+                 this.$emit('modalChange')  
               }
             })
             
@@ -119,6 +120,10 @@
               amount:{
                 Name:this.GroupName,
                 Describe:this.Describe
+              }
+            }).then((code) => {
+              if(code==200){
+                 this.$emit('modalChange')  
               }
             })
             
