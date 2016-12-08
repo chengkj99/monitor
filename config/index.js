@@ -22,8 +22,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // proxy test cheng
-
+      // proxy set up from Cheng
       '/api': {
         target: 'http://192.168.92.92:8080',
         changeOrigin: true,

@@ -50,7 +50,7 @@
     <div v-show="modalAddUserAttendanceShow">
       <AddUserAttendance></AddUserAttendance>
     </div>    
-    <div v-show="modalUserAttendanceUpdateShow">
+    <div v-if="modalUserAttendanceUpdateShow">
       <UserAttendanceUpdate
         :Id="Id"
         :GroupName="GroupName" 
