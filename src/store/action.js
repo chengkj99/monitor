@@ -369,7 +369,7 @@ const actions = {
       )
     })
   },
-  
+
   /*---------------------------------------------用户组管理--------------------*/
   ADD_USER_GROUP_AC ({ commit },payload) {
 
@@ -411,6 +411,20 @@ const actions = {
     return Promise.resolve()
 
   },
+   GET_USER_GROUP_AC ({ commit },payload) {
+
+    //查询用户接口
+    // /v1/user/all POST
+
+    console.log(payload.amount)
+
+    commit({
+      type:'GET_USER_GROUP',
+      UserGroupData:payload.amount
+    })
+    return Promise.resolve()
+
+  },
   /*---------------------------------------------用户组用户关系管理--------------------*/
   
   ADD_USER_RELATION_AC ({ commit },payload) {
@@ -436,7 +450,8 @@ const actions = {
     })
     return Promise.resolve()
 
-  },  /*---------------------------------------------用户组监控项关系管理--------------------*/
+  }, 
+  /*---------------------------------------------用户组监控项关系管理--------------------*/
  
   GET_USER_MONITOR_RELATION_AC ({ commit }) {
     // http://192.168.92.92:8080/v1/groupmetric/all

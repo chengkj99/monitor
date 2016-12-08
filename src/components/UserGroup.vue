@@ -28,8 +28,11 @@ import UserAndUserGroup from './tpl/UserAndUserGroup'
       }
     },
     computed:{
-    
+      
     },
+    mounted:{
+      
+    }
     methods:{
     
     },

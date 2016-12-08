@@ -201,7 +201,9 @@ const mutations = {
   DEL_USER_GROUP (state,payload) {
     state.UserGroupData=payload.UserGroupData
   },
-
+  GET_USER_GROUP  (state,payload) {
+    state.UserGroupData=payload.UserGroupData
+  },
   /*---------------------------------------------用户组用户关系--------------------*/
 
   //添加用户组用户关系
