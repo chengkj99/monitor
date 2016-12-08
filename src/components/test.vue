@@ -27,7 +27,6 @@
         <label for="two">Two</label>
         <br>
         <span>Picked: {{ picked }}</span>
-        
       </div>
 
       
