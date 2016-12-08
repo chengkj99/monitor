@@ -13,6 +13,7 @@ import store  from './index'
 
 
 const actions = {
+  /**--------------隐藏panel---------------- */
   MODAL_CHANGE_AC ({ commit }) {
     commit('MODAL_CHANGE')
     return Promise.resolve()
@@ -357,19 +358,16 @@ const actions = {
       Vue.http.post('/api/v1/user/del',{},{
         params:payload.amount
       }).then(
-        res => res.data.code
-      ).then(
-        (code) => {
-          resolve(code)
-          
-          if(code==200){
+        (res) => {
+          resolve(res)
+          if(res.data.code==200){
             store.dispatch('GET_USER_NAME_AC')
           }
         }
       )
     })
   },
-  
+
   /*---------------------------------------------用户组管理--------------------*/
   ADD_USER_GROUP_AC ({ commit },payload) {
 
@@ -377,38 +375,82 @@ const actions = {
     // /v1/user/create POST
 
     console.log(payload.amount)
-
-    commit({
-      type:'ADD_USER_GROUP',
-      UserGroupDataAdd:payload.amount
+    return new Promise((resolve,reject)=>{
+      Vue.http.post("/api/v1/group/create",payload.amount,{}).then(
+        res => {
+          console.log('add group',res)
+        return res.data.code
+        }
+      ).then(
+        (code) => {
+          resolve(code)
+          if(code==200){
+            store.dispatch('GET_USER_GROUP_AC')
+          }
+        }
+      )
     })
-    return Promise.resolve()
+    
 
   },
   UPDATE_USER_GROUP_AC ({ commit },payload) {
-
-    // 调用修改用户组数据接口 payload.amount  
-    //查询更新数据 :UserGroupData
-    console.log(payload.amount)
-
-    commit({
-      type:'UPDATE_USER_GROUP',
-      UserGroupData:UserGroupData
+    console.log("group update________",payload.amount)
+   // return Promise.resolve()
+   return new Promise((resolve,reject)=>{
+      Vue.http.post("/api/v1/group/update",payload.amount,{}).then(
+        res => {
+          console.log('update res',res)
+        return res.data.code
+        }
+      ).then(
+        (code) => {
+          resolve(code)
+          if(code==200){
+            store.dispatch('GET_USER_GROUP_AC')
+          }
+        }
+      )
     })
-    return Promise.resolve()
 
   },
   DEL_USER_GROUP_AC ({ commit },payload) {
 
     // 调用删除用户组数据接口 payload.amount  
     //查询更新数据 :UserGroupData
-    console.log(payload.amount)
+    console.log('delete group ----------------',payload.amount)
 
-    commit({
-      type:'DEL_USER_GROUP',
-      UserGroupData:UserGroupData
+    return new Promise((resolve,reject)=>{
+      Vue.http.post("/api/v1/group/del",{},{params:payload.amount}).then(
+        res => {
+        return res.data.code
+        }
+      ).then(
+        (code) => {
+          resolve(code)
+          if(code==200){
+            store.dispatch('GET_USER_GROUP_AC')
+          }
+        }
+      )
     })
-    return Promise.resolve()
+
+  },
+
+   //查询组接口
+   // /v1/user/all POST
+   GET_USER_GROUP_AC ({ commit },payload) {
+    
+    return new Promise((resolve,reject) => {
+      Vue.http.get('/api/v1/group/all').then( (res) => {
+       console.log('user group all',res.data)
+        commit({
+          type:'GET_USER_GROUP',
+          UserGroupData:res.data
+        })
+      }).then( 
+        res => resolve(res)
+      )     
+    }) 
 
   },
   /*---------------------------------------------用户组用户关系管理--------------------*/
@@ -436,7 +478,8 @@ const actions = {
     })
     return Promise.resolve()
 
-  },  /*---------------------------------------------用户组监控项关系管理--------------------*/
+  }, 
+  /*---------------------------------------------用户组监控项关系管理--------------------*/
  
   GET_USER_MONITOR_RELATION_AC ({ commit }) {
     // http://192.168.92.92:8080/v1/groupmetric/all

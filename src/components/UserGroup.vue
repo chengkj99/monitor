@@ -24,16 +24,20 @@ import UserAndUserGroup from './tpl/UserAndUserGroup'
   
     data () {
       return {
-        listData:this.$store.state.UserGroupData
+        listData:[]
       }
     },
     computed:{
-    
+      listData(){
+        return this.$store.state.UserGroupData
+      }
+    },
+    mounted () { 
+      console.log('---------------')
+      this.$store.dispatch('GET_USER_GROUP_AC');
     },
     methods:{
     
-    },
-    mounted () {
     }
   }
 </script>
