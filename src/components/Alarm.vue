@@ -147,19 +147,24 @@ import ModalDetails from './tpl/ModalDetails'
     }
   },
   mounted () {
-    this.$store.dispatch('GET_ALARM_AC')
+    this.$store.dispatch('GET_ALARM_AC').then((res) =>{
+      this.total= res.data.length
+    })
   },
   methods: {
     queryHandle (e) {
       this.$store.dispatch({
         type:'QUERY_ALARM_AC',
         amount:{
-          SystemName:this.sysName,
-          Endpoint:this.endpoint,
-          Metric:this.metricName
+          systemName:this.sysName,
+          endpoint:this.endpoint,
+          metric:this.metricName,
+          size:this.pageSize,
+          start:0
         }
+      }).then((res)=>{
+        this.total= res.data.length
       })
-      alert('query function!')
     },
     historyHandle (e) {     
       let aimID=e.target.dataset.id
@@ -186,9 +191,21 @@ import ModalDetails from './tpl/ModalDetails'
     },
     
     pageHandler (page) {
-      //here you can do custom state update
+      //here you can do custom state update  
       this.page = page
-      alert(page)
+      let totalNow = this.pageSize * this.page +1
+      this.$store.dispatch({
+        type:'QUERY_ALARM_AC',
+        amount:{
+          systemName:this.sysName,
+          endpoint:this.endpoint,
+          metric:this.metricName,
+          size:this.pageSize,
+          start:totalNow
+        }
+      }).then((res)=>{
+        this.total= res.data.length
+      })
     },
     createUrl (unit) {
       return unit.page > 1?'#page=' + unit.page:'#'

@@ -53,7 +53,7 @@
 
 <script>
     export default{
-      props:['componentName','Name','Email','Phone','GroupName','Describe'],
+      props:['componentName','Id','Name','Email','Phone','GroupName','Describe'],
       data(){
         return{
           tableBoxStyle:{
@@ -98,18 +98,26 @@
           this.$store.dispatch('USER_UPDATE_CHANGE_AC')         
         },
         resetHandle () {
+          console.log()
           this.newName='';
+          this.newEmail='';
+          this.newPhone='';
+          this.newGroupName = '';
+          this.newDescribe='';
+
         },
         saveHandle (e) {
         if(this.componentName=='用户'){
           this.$store.dispatch({
             type:'UPDATE_USER_AC',
             amount:{
+              Id:Number(this.Id),
               Name:this.newName,
               Email:this.newEmail,
               Phone:this.newPhone
             }
           })
+          console.log("user update data:",this.newName)
         }else{
           this.$store.dispatch({
             type:'UPDATE_USER_GROUP_AC',
