@@ -4,6 +4,7 @@ import router from './router'
 import resource from 'vue-resource'
 import store from './store'
 import zPagenav from 'vue-pagenav'
+
 Vue.use(zPagenav)
 Vue.use(resource)
 

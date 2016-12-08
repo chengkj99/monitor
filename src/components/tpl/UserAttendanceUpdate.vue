@@ -87,32 +87,21 @@
           newCharge:''
         }
       },
+      mounted () {
+        this.newId=this.Id;
+        this.newGroupName=this.GroupName;
+        this.newDateTime=this.DateTime;
+        this.newDuty=this.Duty;
+        this.newBackup=this.Backup;
+        this.newCharge=this.Charge;
+      },
       computed:{
         UserGroupData () {
           return this.$store.state.UserGroupData
         },   
         UserData () {
           return this.$store.state.UserData
-        },        
-        
-        newId () {
-          return this.Id
-        },          
-        newGroupName () {
-          return this.GroupName
-        },        
-        newDateTime () {
-          return this.DateTime
-        },        
-        newDuty () {
-          return this.Duty
-        },        
-        newBackup () {
-          return this.Backup
-        },        
-        newCharge () {
-          return this.Charge
-        }
+        }        
       },
       methods:{
         modalChange () {

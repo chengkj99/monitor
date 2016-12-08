@@ -78,7 +78,7 @@
       </div>
     </template>
     
-    <div v-show="modalUserUpdateShow">
+    <div v-if="modalUserUpdateShow">
       <UsersUpdate :componentName="componentName" 
                    :Id="Id"
                    :Name="Name"

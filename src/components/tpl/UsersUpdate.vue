@@ -64,41 +64,26 @@
            marginTop:(window.innerHeight-320)/2+"px",
            height:'320px'
           },
-          newName:'',
-          newEmail:'',
-          newPhone:'',
-          newGroupName:'',
-          newDescribe:''
+          newName:this.Name,
+          newEmail:this.Email,
+          newPhone:this.Phone,
+          newGroupName:this.GroupName,
+          newDescribe:this.Describe
           
         }
       },
-      computed:{
-        newName (){
-          return this.Name
-        },      
-        newEmail (){
-          return this.Email
-        },          
-        newPhone (){
-          return this.Phone
-        },      
-        newGroupName (){
-          return this.GroupName
-        },
-        newDescribe (){
-          return this.Describe
-        },
-      },
       mounted () {
-        console.log("保存:"+this.Name+'//'+this.Email+"//"+this.Phone+"//"+this.GroupName+"//"+this.Describe)
-        console.log("保存:"+this.newName+'//'+this.newEmail+"//"+this.newPhone+"//"+this.newGroupName+"//"+this.newDescribe)
+        this.newName=this.Name
+        this.newEmail=this.Email;
+        this.newPhone=this.Phone;
+        this.newGroupName=this.GroupName;
+        this.newDescribe=this.Describe;
       },
       methods:{
         modalChange () {
           this.$store.dispatch('USER_UPDATE_CHANGE_AC')         
         },
         resetHandle () {
-          console.log()
           this.newName='';
           this.newEmail='';
           this.newPhone='';
@@ -127,8 +112,6 @@
             }
           })
         }
-
-          alert("保存:"+this.newName+'//'+this.newEmail+"//"+this.newPhone+"//"+this.newGroupName+"//"+this.newDescribe)
         }
       }
     }
