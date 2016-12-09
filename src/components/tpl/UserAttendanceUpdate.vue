@@ -87,6 +87,16 @@
           newCharge:''
         }
       },
+      watch:{
+       newGroupName(val){
+          this.$http.get('/api/v1/usergroup/usersgname?groupName='+val).then((res) => {
+          this.UserData=res.data;
+         }, 
+         (res) => {
+          console.log('error res:::'+res)
+         });  
+       }
+      },
       mounted () {
         this.newId=this.Id;
         this.newGroupName=this.GroupName;
@@ -114,7 +124,7 @@
           this.$store.dispatch({
             type:'UPDATE_USER_ATTENDANCE_AC',
             amount:{
-              Id: this.newId,
+              Id: Number(this.newId),
               GroupName: this.newGroupName,
               Date: this.newDateTime,
               Duty: this.newDuty,
@@ -122,7 +132,9 @@
               Charge: this.newCharge
               
             }
-          })
+          }).then(
+            (res)=>{ this.$store.dispatch('USER_ATTENDANCE_UPDATE_CHANGE_AC')}
+          )
 
         }
       }

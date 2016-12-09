@@ -102,6 +102,9 @@ import UserAttendanceUpdate from './tpl/UserAttendanceUpdate'
         return this.$store.state.modalUserAttendanceUpdateShow
       }
     },
+    mounted(){
+      this.$store.dispatch('GET_USER_ATTENDANCE_AC')
+    },
     methods: {
       AddUserAttendanceHandle () {
         console.log(this.UserMonitorRelationData)
@@ -116,11 +119,6 @@ import UserAttendanceUpdate from './tpl/UserAttendanceUpdate'
         this.Duty=_this.dataset.duty;
         this.Backup=_this.dataset.backup;
         this.Charge=_this.dataset.charge;
-        console.log('this.GroupName:'+this.GroupName)
-        console.log('this.DateTime:'+this.DateTime)
-        console.log('this.Duty:'+this.Duty)
-        console.log('this.Backup:'+this.Backup)
-        console.log('this.Charge:'+this.Charge)
         this.$store.dispatch('USER_ATTENDANCE_UPDATE_CHANGE_AC',
         )
       }

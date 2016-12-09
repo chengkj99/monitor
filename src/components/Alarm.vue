@@ -127,9 +127,10 @@ import ModalDetails from './tpl/ModalDetails'
           this.selectMetric=res.data;
           console.log('selectMetric:::',this.selectMetric)
           
-      }, (res) => {
+      }).then(
+        (res) => {
           console.log('error res:::'+res)
-      });  
+        });  
     }
   },
   computed: {

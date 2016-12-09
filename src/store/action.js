@@ -529,7 +529,11 @@ const actions = {
       type:'ADD_USER_MONITOR_RELATION',
       UserMonitorRelationDataAdd:payload.amount
     })
-    return Promise.resolve()
+    return new Promise(
+      (resolve,reject)=>{
+        Vue.http.post("/api/v1/")
+      }
+    )
   },
   DEL_USER_MONITOR_RELATION_AC ({ commit },payload) {
 
@@ -561,17 +565,29 @@ const actions = {
     // 调用修改接口 payload.amount  :UserAttendanceData
     // 调用获取数据接口 :UserAttendanceData
     console.log(payload.amount)
-    /*
-    Vue.http.get('/api/v1/schedule/current').then( (res) => {
-      console.log('res',res.data)
-      commit({
-        type:'UPDATE_USER_ATTENDANCE',
-        UserAttendanceData:res.data
-      })
+    
+    Vue.http.post('/api/v1/schedule/update',payload.amount).then( (res) => {
+       console.log('res',res.data)
+        if(res.data.code =200){
+           store.dispatch('GET_USER_ATTENDANCE_AC')
+        }
+      // commit({
+      //   type:'UPDATE_USER_ATTENDANCE',
+      //   UserAttendanceData:res.data
+      // })
     })
-    */
-  },
   
+  },
+  ADD_USER_ATTENDANCE_AC({commit},payload){
+    console.log('add schedule:',payload.amount)
+    Vue.http.post('/api/v1/schedule/create',payload.amount).then(
+      (res)=>{
+        if(res.data.code =200){
+           store.dispatch('GET_USER_ATTENDANCE_AC')
+        }
+      }
+    )
+  },
   
   
   /*---------------------------------------------公共组件所需数据获取--------------------*/
