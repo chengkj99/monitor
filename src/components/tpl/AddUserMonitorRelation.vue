@@ -4,7 +4,7 @@
 <template>
   <div id="modal-add-users" @click.self="modalChange" >
     <div class="container"  id="table-box" :style=" tableBoxStyle " >
-      <h3 class="title is-4">添加用户组关系</h3>
+      <h3 class="title is-4">添加用户组关注的监控项</h3>
 
         <div>
           <div>

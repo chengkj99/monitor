@@ -33,7 +33,6 @@ import UserAndUserGroup from './tpl/UserAndUserGroup'
       }
     },
     mounted () { 
-      console.log('---------------')
       this.$store.dispatch('GET_USER_GROUP_AC');
     },
     methods:{

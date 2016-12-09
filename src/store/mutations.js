@@ -213,7 +213,11 @@ const mutations = {
   //删除用户组用户关系
   DEL_USER_RELATION (state,payload) {
   state.UserRelationData=payload.UserRelationData
-  },  
+  }, 
+  //获取用户和组的关系
+  GET_USER_RELATION(state,payload){
+    state.UserRelationData =payload.UserRelationData
+  }, 
   
   /*---------------------------------------------用户组监控项关系--------------------*/
 

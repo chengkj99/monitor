@@ -69,31 +69,40 @@ import AddUserRelation from './tpl/AddUserRelation'
         Id:'',
         modalAddUserRelateShow:false,
         
-        UserRelationData:this.$store.state.UserRelationData
+        UserRelationData:[]
       }
     },
     methods: {
     
       deleteHandle (e) {
+        let isConfirm = confirm("确定删除?")
+        if(!isConfirm){
+          return
+        }
         let itemId=e.target.dataset.id;
         let groupId=e.target.dataset.groupid;
           this.$store.dispatch({
             type:'DEL_USER_RELATION_AC',
             amount:{
-            GroupId:groupId,
-            Id:itemId
+            GroupId:Number(groupId),
+            UserId:Number(itemId)
             }
           })
-        alert('删除del:'+itemId+'----'+groupId)
       },
       addUserRelation () {
         this.$store.dispatch('ADD_USER_RELATE_CHANGE_AC')
       }
     },
     computed: {
-      modalAddUserRelateShow () {
+      modalAddUserRelateShow(){
         return this.$store.state.modalAddUserRelateShow
+      },
+      UserRelationData(){
+        return this.$store.state.UserRelationData
       }
+    },
+    mounted(){
+      this.$store.dispatch('GET_USER_RELATION_AC')
     },
     components:{
       AddUserRelation

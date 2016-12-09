@@ -316,7 +316,7 @@ const actions = {
   // 调用添加用户接口 payload.amount  :UserDataAdd
     console.log(payload.amount)
     return new Promise((resolve, reject) => {
-      Vue.http.post('/api//v1/user/create',payload.amount).then( (res) => {
+      Vue.http.post('/api//v1/user/create',payload.amount,{}).then( (res) => {
         commit({
           type:'ADD_USER',
           UserDataAdd:payload.amount
@@ -399,7 +399,6 @@ const actions = {
    return new Promise((resolve,reject)=>{
       Vue.http.post("/api/v1/group/update",payload.amount,{}).then(
         res => {
-          console.log('update res',res)
         return res.data.code
         }
       ).then(
@@ -459,26 +458,54 @@ const actions = {
 
     // 调用添加用户组用户关系接口 payload.amount  :UserRelationDataAdd
     console.log(payload.amount)
-
-    commit({
-      type:'ADD_USER_RELATION',
-      UserRelationDataAdd:payload.amount
-    })
-    return Promise.resolve()
+    //return Promise.resolve()
+    return new Promise(
+      (resolve,reject)=>{
+        console.log("batchadd usergroup:",payload.amount)
+        Vue.http.post("/api/v1/usergroup/batchadd",payload.amount,{})
+        .then((res)=>{
+            resolve(res)
+            if(res.data.code == 200){
+              store.dispatch('GET_USER_RELATION_AC')
+            }
+        })
+      }
+    )
   },
   DEL_USER_RELATION_AC ({ commit },payload) {
 
     // 调用删除用户组用户关系数据接口 payload.amount  
     //查询更新数据 :UserRelationData
     console.log(payload.amount)
-
-    commit({
-      type:'DEL_USER_RELATION',
-      UserRelationData:state.UserRelationData
-    })
-    return Promise.resolve()
+    return new Promise(
+      (resolve,reject)=>{
+        Vue.http.post("/api/v1/usergroup/del",payload.amount)
+        .then((res)=>{
+          resolve(res)
+          if(res.data.code == 200){
+            store.dispatch('GET_USER_RELATION_AC')
+          }
+        })
+      }
+    )
 
   }, 
+
+  //获取所有用户和用户组的关系
+  GET_USER_RELATION_AC ({ commit }) {
+
+    //获取所有用户和小组关系
+    return new Promise((resolve,reject)=>{
+      Vue.http.get("/api/v1/usergroup/all").then(
+        (res)=>{
+          commit({
+            type:'GET_USER_RELATION',
+            UserRelationData:res.data
+          })
+        }
+      )
+    })
+  },
   /*---------------------------------------------用户组监控项关系管理--------------------*/
  
   GET_USER_MONITOR_RELATION_AC ({ commit }) {

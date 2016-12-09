@@ -13,8 +13,8 @@
             <p class="control">
             <span class="select" >
               <select v-model="GroupName" @blur="groupSelectBlurHandle">
-                <option v-for="val in UserRelationData" :data-groupId="val.GroupId" :mark="val.GroupId">
-                  {{val.GroupName}}
+                <option v-for="val in UserGroupData" :data-groupId="val.Id" :mark="val.Id">
+                  {{val.Name}}
                 </option>
               </select>
             </span>
@@ -66,7 +66,7 @@ import Multiselect from 'vue-multiselect'
            marginTop:(window.innerHeight-385)/2+"px",
            height:"385px"
           },
-          UserRelationData:this.$store.state.UserRelationData,
+          UserGroupData:this.$store.state.UserGroupData,
           UserData:this.$store.state.UserData,
           
           Name:'',
@@ -92,6 +92,9 @@ import Multiselect from 'vue-multiselect'
         UserData () {
           return this.$store.state.UserData;
         },
+        UserGroupData(){
+          return this.$store.state.UserGroupData;
+        },
         options () {
           let arr=[];
           this.UserData.map((it,index)=>{
@@ -112,20 +115,19 @@ import Multiselect from 'vue-multiselect'
          
           let UserIdArr=[]
           this.selectedData.map( (it) => {
-            UserIdArr.push(it.split('#')[1])
+            let userId = Number(it.split('#')[1])
+            UserIdArr.push(userId)
           })
           
           this.$store.dispatch({
             type:'ADD_USER_RELATION_AC',
             amount:{
-              GroupId:this.GroupId,
-              UserId:UserIdArr
+              GroupId:Number(this.GroupId),
+              UserIds:UserIdArr
             }
+          }).then((res)=>{
+            this.$store.dispatch('ADD_USER_RELATE_CHANGE_AC')
           })
-          
-          alert('保存'+this.Name+'--'+this.Id+'|||'
-          +this.GroupName+'---'+this.GroupId
-          )
         },
         resetHandle () {
           this.Name='';
