@@ -117,7 +117,9 @@ import AddMonitorItem from './AddMonitorItem'
          if(this.componentName=='监控项'){
            this.$store.dispatch({
              type:'CONFIRM_MONITOR_ITEM_AC',
-             amount:itemId
+             amount:{
+               id:itemId
+             }
           })
          }else{
          this.$store.dispatch({

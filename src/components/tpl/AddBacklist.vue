@@ -161,7 +161,14 @@
         modalChange () {
           this.$emit('modalChange')       
         },
-        
+        //判断字符串是否为空 
+         isEmpty(val) {
+            if (val==''){
+               return true
+            }
+          return false
+           
+         },
         saveHandle (e) {
 
           // let printTime=new Date();
@@ -201,6 +208,26 @@
           // + newDay + ' ' + newHour + ':'+ 
           // printTime.getMinutes() + ':' + printTime.getSeconds();
           
+          //参数check
+
+          
+        
+          if(this.isEmpty(this.systemName)){
+            alert("来源系统不能为空")
+            return
+          }
+          if(this.isEmpty(this.endpoint)){
+            alert("告警节点不能为空")
+            return
+          }
+          if (this.isEmpty(this.metricName)){
+            alert('监控项不能为空')
+            return
+          }
+          if(this.isEmpty(this.periodData)){
+            alert('加黑时长不能为空')
+            return
+          }
           
           this.$store.dispatch({
             type:'ADD_BACK_LIST_AC',
@@ -217,17 +244,8 @@
           }).then(
             (res)=>{ this.$emit('modalChange')}
           )
-          alert('保存'+this.systemName+'--'
-          +this.metricName+'---'
-          +this.periodData+''+'---'
-          +this.endpoint+''+'---'
-          +this.subEndpoint+"---"
-          +this.reason+'==='
-          +'curTime:'+this.curTime
-          +'---'+'newTime:'
-          +this.newTime
-          )
         },
+        
         resetHandle () {
           this.isCustom=false;
           this.systemName='';

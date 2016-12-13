@@ -71,7 +71,6 @@ const actions = {
     Vue.http.post('/api/v1/blacklist/create',payload.amount)
     .then(
      (res)=>{      
-        store.dispatch('ADD_SYSTEM_SHOW')
         store.dispatch('GET_BACK_LIST_AC')
       }
     ) 
@@ -181,8 +180,32 @@ const actions = {
           })
       }
     )
-   
-    
+  },
+
+//监控项是否存在
+  EXIST_MONITOR_ITEM_AC({commit},payload){
+    console.log('payload.amount::'+payload.amount)
+    return new Promise(
+      (resolve,reject)=>{
+         Vue.http.get("/api/v1/metric/exist",{params:payload.amount}).then(
+           (res)=>{
+             resolve(res)
+           },
+           (res)=>{
+             reject(res)
+           }
+         )
+      }
+    )
+  },
+  RENAME_MONITOR_ITEM_AC({commit},payload){
+    console.log('rename metric name',payload.amount)
+    Vue.http.post('/api/v1/metric/rename',{},{params:payload.amount}).then(
+      (res)=>{
+        store.dispatch('GET_MONITOR_ITEM_AC')
+        store.dispatch('RENAME_CHANGE_AC')
+      }  
+    )
   },
 
   //添加监控项数据
@@ -194,6 +217,7 @@ const actions = {
     Vue.http.post('/api/v1/metric/create',payload.amount).then(
       (res)=>{
         store.dispatch('GET_MONITOR_ITEM_AC')
+        store.dispatch('ADD_SYSTEM_SHOW_AC')
       }
     )
     // commit({
@@ -239,11 +263,17 @@ const actions = {
   },
   CONFIRM_MONITOR_ITEM_AC ({ commit },payload) {
     //接口监控项确认操作 payload.amount    console.log(Vue.http)
-    commit({
-      type:'DEL_MONITOR_ITEM',
-      RuleListDataAdded:state.MonitorItemData
-    })
-    return Promise.resolve()
+    Vue.http.post('/api/v1/metric/confirm',{},{params:payload.amount})
+    .then(
+      (res)=>{
+        store.dispatch('GET_MONITOR_ITEM_AC')
+      }
+    )
+    // commit({
+    //   type:'DEL_MONITOR_ITEM',
+    //   RuleListDataAdded:state.MonitorItemData
+    // })
+    // return Promise.resolve()
   },
 
   /*---------------------------------------------来源系统管理--------------------*/

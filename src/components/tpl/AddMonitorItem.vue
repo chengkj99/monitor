@@ -83,6 +83,14 @@
         },
         saveHandle () {
           if(this.componentName=='监控项'){
+             if (this.SystemName == ''){
+              alert('来源系统名称不能为空')
+              return 
+            }
+            if (this.metricName == ''){
+              alert('监控项名称不能为空')
+              return
+            }
             this.$store.dispatch({
               type:'ADD_MONITOR_ITEM_AC',
               amount:{
@@ -93,6 +101,10 @@
               }
             })
           }else{
+            if (this.SystemName == ''){
+              alert('来源系统名称不能为空')
+              return
+            }
             this.$store.dispatch({
               type:'ADD_ALARM_SOURCE_AC',
               amount:{
@@ -102,9 +114,6 @@
               }
             })
           }
-
-        
-          alert('保存'+this.SystemName+'--'+this.metricName+'---'+this.alarmContent);
         },
         resetHandle () {
           this.SystemName='';
