@@ -29,7 +29,7 @@
             <span class="select" >
               <select v-model="metricName">
                 <option v-for="val in selectMetricName" >
-                  {{val}}
+                  {{val.MetricName}}
                 </option>
               </select>
             </span>
@@ -135,10 +135,24 @@
         if(val=='自定义'){
           this.isCustom=true;
         }
+        },
+
+        systemName(val){
+          this.$http.get('/api/v1/metric/search?systemName='+val).then((res) => {
+          this.selectMetricName=res.data;
+         })
         }
+
       },
       computed:{
-        
+        selectSysName(){
+          return this.$store.state.SystemNameData
+        }
+      },
+      mounted(){
+        //获取所有来源系统
+        this.$store.dispatch('GET_SYSTEM_NAME_AC')
+
       },
       methods:{
         isNumber (val) {
@@ -147,44 +161,45 @@
         modalChange () {
           this.$emit('modalChange')       
         },
+        
         saveHandle (e) {
 
-          let printTime=new Date();
+          // let printTime=new Date();
           
-          let curHour=printTime.getHours();
-          let newHour=0;
-          if(this.isNumber(this.periodData)){
-             newHour=curHour+this.periodData;
-          }else{
-             newHour=curHour+Number(this.periodData.split('h')[0]);
-          }
-          
-          
-          let curDay=printTime.getDate();
-          let newDay=0;
-          
-          if(newHour<24){
-            newDay=curDay;
-          }else if(newHour==24){
-            newDay=curDay+1;
-            newHour=0;
-          }else{
-            //Math.floor(0.60):向下取整  ％:取余
-            newDay=curDay+Math.floor(newHour/24);
-            newHour= newHour%24;
-          }
+          // let curHour=printTime.getHours();
+          // let newHour=0;
+          // if(this.isNumber(this.periodData)){
+          //    newHour=curHour+this.periodData;
+          // }else{
+          //    newHour=curHour+Number(this.periodData.split('h')[0]);
+          // }
           
           
-          console.log('curHour:'+curHour+'---newHour:'+newHour)
+          // let curDay=printTime.getDate();
+          // let newDay=0;
+          
+          // if(newHour<24){
+          //   newDay='0'+curDay;
+          // }else if(newHour==24){
+          //   newDay=curDay+1;
+          //   newHour=0;
+          // }else{
+          //   //Math.floor(0.60):向下取整  ％:取余
+          //   newDay=curDay+Math.floor(newHour/24);
+          //   newHour= newHour%24;
+          // }
           
           
-          this.curTime=printTime.getFullYear() + '-' + printTime.getMonth() + '-'
-          + curDay + ' ' + curHour + ':'+ 
-          printTime.getMinutes() + ':' + printTime.getSeconds();
+          // console.log('curHour:'+curHour+'---newHour:'+newHour)
           
-          this.newTime=printTime.getFullYear() + '-' + printTime.getMonth() + '-'
-          + newDay + ' ' + newHour + ':'+ 
-          printTime.getMinutes() + ':' + printTime.getSeconds();
+          
+          // this.curTime=printTime.getFullYear() + '-' + printTime.getMonth() + '-'
+          // + curDay + ' ' + curHour + ':'+ 
+          // printTime.getMinutes() + ':' + printTime.getSeconds();
+          
+          // this.newTime=printTime.getFullYear() + '-' + printTime.getMonth() + '-'
+          // + newDay + ' ' + newHour + ':'+ 
+          // printTime.getMinutes() + ':' + printTime.getSeconds();
           
           
           this.$store.dispatch({
@@ -193,12 +208,15 @@
              SystemName: this.systemName,
              Endpoint: this.endpoint,
              SubEndpoint: this.subEndpoint ,
-             Metric: this.metricNam,
-             BeginTime: this.curTime,
-             EndTime: this.newTime,
+             Metric: this.metricName,
+            //  BeginTime: this.curTime,
+            //  EndTime: this.newTime,
+             Period:Number(this.periodData.split('h')[0]),
              Reason: this.reason
             }
-          })
+          }).then(
+            (res)=>{ this.$emit('modalChange')}
+          )
           alert('保存'+this.systemName+'--'
           +this.metricName+'---'
           +this.periodData+''+'---'

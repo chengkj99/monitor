@@ -29,7 +29,7 @@
           <td>{{ v.Describe }}</td>
           <td>{{ v.ConfirmState | ConfirmState }}</td>
           <td>
-            <a class="button is-small" @click="modalChange" :data-id="v.Id" :data-metric-name="v.MetricName" :data-sys-name="v.SystemName">重命名</a>
+            <a class="button is-small" @click="modalChange" :data-id="v.Id" :data-metric-name="v.MetricName" :data-sys-name="v.SystemName">纠错</a>
             <a class="button is-small" @click="deleteHandle" :data-id="v.Id">删除</a>
             <a class="button is-small" @click="confirmHandle" :data-id="v.Id" v-if="!v.ConfirmState">确认</a>
             <a class="button is-small" style="visibility: hidden;"  v-else>确认</a>
@@ -48,7 +48,7 @@
           <td>{{ v.Describe }}</td>
           <td>{{ v.ConfirmState | ConfirmState }}</td>
           <td>
-            <a class="button is-small" @click="modalChange" :data-id="v.Id" :data-metric-name="v.MetricName" :data-sys-name="v.SystemName">重命名</a>
+            <a class="button is-small" @click="modalChange" :data-id="v.Id" :data-metric-name="v.MetricName" :data-sys-name="v.SystemName">纠错</a>
             <a class="button is-small" @click="deleteHandle" :data-id="v.Id">删除</a>
             <a class="button is-small" @click="confirmHandle" :data-id="v.Id" v-if="!v.ConfirmState">确认</a>
             <a class="button is-small" style="visibility: hidden;"  v-else>确认</a>
@@ -83,7 +83,7 @@ import AddMonitorItem from './AddMonitorItem'
   
     data () {
       return {
-        modalRenameShow:false,
+       modalRenameShow:false,
         modalAddMonitorItemShow:false,
         
         metricName:'',
@@ -98,15 +98,18 @@ import AddMonitorItem from './AddMonitorItem'
         if(this.componentName=='监控项'){
           this.$store.dispatch({
             type:'DEL_MONITOR_ITEM_AC',
-            amount:itemId
+            amount:{
+              id:itemId
+            }
           })
         }else{
           this.$store.dispatch({
             type:'DEL_ALARM_SOURCE_AC',
-            amount:itemId
+            amount:{
+              id:itemId
+            }
           })
         }
-        alert('删除'+itemId)
       },
       confirmHandle (e) {
         let itemId=e.target.dataset.id; 
@@ -119,11 +122,11 @@ import AddMonitorItem from './AddMonitorItem'
          }else{
          this.$store.dispatch({
              type:'CONFIRM_ALARM_SOURCE_AC',
-             amount:itemId
+             amount:{
+               id:itemId
+              }
           })
          }
-
-        alert('确认'+itemId)
       },
       modalChange (e) {
        var _this=e.target;
@@ -134,27 +137,20 @@ import AddMonitorItem from './AddMonitorItem'
         this.$store.dispatch('RENAME_CHANGE_AC')
       },
       addMonitor () {
-        if(this.modalAddMonitorItemShow==false){
-          this.modalAddMonitorItemShow=true
-        }else{
-          this.modalAddMonitorItemShow=false
-        }
+        this.$store.dispatch('ADD_SYSTEM_SHOW_AC')
       }
     },
     computed: {
       modalRenameShow () {
         return this.$store.state.modalRenameShow
+      },
+      modalAddMonitorItemShow(){
+        return this.$store.state.modalAddMonitorItemShow
       }
     },
     filters: {
       ConfirmState (val) {
-        let value;
-        if(val==false){
-          value='未确认'
-        }else{
-          value='已确认'
-        }
-        return value;
+        return val?'已确认':'未确认';
       }
     },
     components:{

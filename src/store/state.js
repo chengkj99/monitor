@@ -657,6 +657,11 @@ const State = {
   modalAddUserMonitorRelationShow:false,
   modalAddUserAttendanceShow:false,
   modalUserAttendanceUpdateShow:false,
+
+  //监控项面板是否显示
+  modalAddMonitorItemShow:false,
+  //规则面板是否显示
+  modalAddShow:false,
   
   BackListData:BackListData,
   RuleListData:RuleListData,

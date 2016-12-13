@@ -46,16 +46,39 @@ const actions = {
     commit('USER_ATTENDANCE_UPDATE_CHANGE')
     return Promise.resolve()
   },
-  
+  //显示隐藏来源系统面板
+  ADD_SYSTEM_SHOW_AC(){
+    if(state.modalAddMonitorItemShow==false){
+          state.modalAddMonitorItemShow=true
+    }else{
+          state.modalAddMonitorItemShow=false
+    }
+  },
+  //显示隐藏rule面板
+  ADD_RULE_SHOW_AC(){
+    if(!state.modalAddShow){
+      state.modalAddShow=true
+    }else{
+      state.modalAddShow= false
+    }
+  },
   /*---------------------------------------------黑名单--------------------*/
   //添加黑名单
   ADD_BACK_LIST_AC({ commit },payload) {
     
+    console.log('add blacklist:',payload.amount)
     //接口操作    console.log(Vue.http)
-    commit({
-      type:'ADD_BACK_LIST',
-      listDataAdded:payload.amount
-    })
+    Vue.http.post('/api/v1/blacklist/create',payload.amount)
+    .then(
+     (res)=>{      
+        store.dispatch('ADD_SYSTEM_SHOW')
+        store.dispatch('GET_BACK_LIST_AC')
+      }
+    ) 
+      //  commit({
+      //     type:'ADD_BACK_LIST',
+      //     listDataAdded:payload.amount
+      //   })
     return Promise.resolve()
   },
   //删除黑名单
@@ -65,21 +88,31 @@ const actions = {
     //payload.amount 是删除的ID
     // 调用查询接口 查出新数据 :listData
     
-    commit({
-      type:'DEL_BACK_LIST',
-      BackListData:'' //BackListData
-    })
-    return Promise.resolve()
+    // commit({
+    //   type:'DEL_BACK_LIST',
+    //   BackListData:'' //BackListData
+    // })
+    // return Promise.resolve()
+    Vue.http.post("/api/v1/blacklist/del",{},{params:payload.amount})
+    .then(
+      (res)=>{
+        store.dispatch('GET_BACK_LIST_AC')
+      }
+    )
   },
   
   //获取黑名单
   GET_BACK_LIST_AC ({ commit }) {
     // 调用查询接口 查出新数据 :BackListData
-    
-    commit({
-      type:'GET_BACK_LIST',
-      BackListData:state.BackListData //BackListData
-    })
+    Vue.http.get("/api/v1/blacklist/all").then(
+      (res)=>{
+         commit({
+          type:'GET_BACK_LIST',
+          BackListData:res.data//BackListData
+        })
+      }
+    )
+   
   },
 
 
@@ -88,32 +121,50 @@ const actions = {
   //获取升级规则数据
   GET_RULE_LIST_AC ({ commit }) {
     // 调用查询接口 查出新数据 :RuleListData
-    commit({
-      type:'GET_RULE_LIST',
-      RuleListData:state.RuleListData //RuleListData
-    })
+    Vue.http.get('/api/v1/rule/all').then(
+      (res)=>{
+          commit({
+            type:'GET_RULE_LIST',
+            RuleListData:res.data //RuleListData
+           })
+      }
+    )
+    
   },
   //添加升级规则数据
-  ADD_BACK_LIST_AC ({ commit },payload) {
+  ADD_RULE_LIST_AC ({ commit },payload) {
     //接口操作    console.log(Vue.http)
-    commit({
-      type:'ADD_RULE_LIST',
-      RuleListDataAdded:payload.amount
-    })
-    return Promise.resolve()
+    console.log('add rule',payload.amount)
+    Vue.http.post('/api/v1/rule/create',payload.amount).then(
+      (res)=>{
+        store.dispatch('GET_RULE_LIST_AC')
+        store.dispatch('ADD_RULE_SHOW_AC')
+      }
+    )
+    // commit({
+    //   type:'ADD_RULE_LIST',
+    //   RuleListDataAdded:payload.amount
+    // })
+    // return Promise.resolve()
   },
   //删除升级规则数据
-  DEL_BACK_LIST_AC ({ commit }) {
+  DEL_RULE_LIST_AC ({ commit },payload) {
 
     //调用删除接口    console.log(Vue.http)
     //payload.amount 是删除的ID
     // 调用查询接口 查出新数据 :listData
 
-    commit({
-      type:'DEL_RULE_LIST',
-      RuleListData:'' //BackListData
-    })
-    return Promise.resolve()
+    console.log(payload.amount)
+    Vue.http.post('/api/v1/rule/del',{},{params:payload.amount}).then(
+      (res)=>{
+        store.dispatch('GET_RULE_LIST_AC')
+      }
+    )
+    // commit({
+    //   type:'DEL_RULE_LIST',
+    //   RuleListData:'' //BackListData
+    // })
+    // return Promise.resolve()
   },
 
   /*---------------------------------------------监控项管理--------------------*/
@@ -122,11 +173,15 @@ const actions = {
   GET_MONITOR_ITEM_AC ({ commit }) {
     
     // 调用查询接口 查数据 :MonitorItemData
-    
-    commit({
-      type:'GET_MONITOR_ITEM',
-      MonitorItemData:state.MonitorItemData
-    })
+    Vue.http.get("/api/v1/metric/all").then(
+      (res)=>{
+         commit({
+            type:'GET_MONITOR_ITEM',
+            MonitorItemData:res.data
+          })
+      }
+    )
+   
     
   },
 
@@ -135,12 +190,17 @@ const actions = {
     //接口添加操作 payload.amount    console.log(Vue.http)
     
     //查询操作更新数据 MonitorItemData
-    
-    commit({
-      type:'ADD_MONITOR_ITEM',
-      MonitorItemData:state.MonitorItemData 
-    })
-    return Promise.resolve()
+    console.log('add metric',payload.amount)
+    Vue.http.post('/api/v1/metric/create',payload.amount).then(
+      (res)=>{
+        store.dispatch('GET_MONITOR_ITEM_AC')
+      }
+    )
+    // commit({
+    //   type:'ADD_MONITOR_ITEM',
+    //   MonitorItemData:state.MonitorItemData 
+    // })
+    // return Promise.resolve()
   },
 
   //监控项名称修改
@@ -148,25 +208,34 @@ const actions = {
     //接口修改操作 payload.amount    console.log(Vue.http)
 
     //查询操作更新数据 MonitorItemData
-
-    commit({
-      type:'UPDATE_MONITOR_ITEM',
-      RuleListDataAdded:state.MonitorItemData
-    })
+    Vue.http.post('/api/v1/metric/update').then(
+      (res)=>{
+         commit({
+           type:'UPDATE_MONITOR_ITEM',
+           RuleListDataAdded:state.MonitorItemData
+          })
+      }
+    )
+   
     return Promise.resolve()
   },
   
   //监控项删除
   DEL_MONITOR_ITEM_AC ({ commit },payload) {
     //接口删除操作 payload.amount    console.log(Vue.http)
-
+    console.log('delete metric -------',payload.amount)
     //查询操作更新数据 MonitorItemData
-
-    commit({
-      type:'DEL_MONITOR_ITEM',
-      RuleListDataAdded:state.MonitorItemData
-    })
-    return Promise.resolve()
+    Vue.http.post('/api/v1/metric/del',{},{params:payload.amount})
+      .then(
+        (res)=>{
+          store.dispatch('GET_MONITOR_ITEM_AC')
+        }
+      )
+    // commit({
+    //   type:'DEL_MONITOR_ITEM',
+    //   RuleListDataAdded:state.MonitorItemData
+    // })
+    // return Promise.resolve()
   },
   CONFIRM_MONITOR_ITEM_AC ({ commit },payload) {
     //接口监控项确认操作 payload.amount    console.log(Vue.http)
@@ -183,11 +252,15 @@ const actions = {
   GET_ALARM_SOURCE_AC ({ commit }) {
 
     // 调用查询接口 查数据 :MonitorItemData
-
-    commit({
-      type:'GET_ALARM_SOURCE',
-      AlarmSourceData:state.AlarmSourceData
-    })
+    Vue.http.get('/api/v1/system/all').then(
+      (res)=>{
+        commit({
+        type:'GET_ALARM_SOURCE',
+        AlarmSourceData:res.data
+       })
+      }
+    )
+    
     return Promise.resolve()
 
   },
@@ -197,45 +270,86 @@ const actions = {
     
     //查询操作更新数据 MonitorItemData
     console.log('payload.amount :'+payload.amount )
-    commit({
-      type:'ADD_ALARM_SOURCE',
-      AlarmSourceDataAdd:payload.amount 
-    })
-    return Promise.resolve()
-  },
+    Vue.http.post('/api/v1/system/create',payload.amount)
+    .then(
+        (res)=>{
+         store.dispatch('GET_ALARM_SOURCE_AC')
+         store.dispatch('ADD_SYSTEM_SHOW_AC')
+        }
 
+    )
+    
+    // return Promise.resolve()
+  },
+  //判断是否存在system
+  EXIST_ALARM_SOURCE_AC({commit},payload){
+    console.log('payload.amount::'+payload.amount)
+    return new Promise(
+      (resolve,reject)=>{
+         Vue.http.get("/api/v1/system/exist",{params:payload.amount}).then(
+           (res)=>{
+             console.log("rename res -------------",res)
+             resolve(res)
+           },
+           (res)=>{
+              console.log("rename res -------------",res)
+             reject(res)
+           }
+         )
+      }
+    )
+  },
   //来源系统名称修改
-  UPDATE_ALARM_SOURCE_AC ({ commit },payload) {
+  RENAME_ALARM_SOURCE_AC ({ commit },payload) {
     //接口修改操作 payload.amount    console.log(Vue.http)
 
     //查询操作更新数据 MonitorItemData
-
-    commit({
-      type:'UPDATE_ALARM_SOURCE',
-      RuleListDataAdded:state.MonitorItemData
-    })
-    return Promise.resolve()
+    console.log('rename system:',payload.amount)
+    Vue.http.post('/api/v1/system/rename',{},{params:payload.amount}).then(
+      (res)=>{
+        store.dispatch('GET_ALARM_SOURCE_AC')
+        store.dispatch('RENAME_CHANGE_AC')
+      }
+    )
+    // commit({
+    //   type:'UPDATE_ALARM_SOURCE',
+    //   RuleListDataAdded:state.MonitorItemData
+    // })
+    // return Promise.resolve()
   },
   
   //来源系统删除
   DEL_ALARM_SOURCE_AC ({ commit },payload) {
     //接口删除操作 payload.amount    console.log(Vue.http)
-
+    console.log(payload.amount)
+    Vue.http.post('/api/v1/system/del',{},{params:payload.amount})
+    .then(
+      (res)=>{
+          store.dispatch('GET_ALARM_SOURCE_AC')
+      }
+    )
     //查询操作更新数据 MonitorItemData
 
-    commit({
-      type:'DEL_ALARM_SOURCE',
-      RuleListDataAdded:state.MonitorItemData
-    })
-    return Promise.resolve()
+    // commit({
+    //   type:'DEL_ALARM_SOURCE',
+    //   RuleListDataAdded:state.MonitorItemData
+    // })
+    // return Promise.resolve()
   },
   CONFIRM_ALARM_SOURCE_AC ({ commit },payload) {
     //接口来源系统确认操作 payload.amount    console.log(Vue.http)
-    commit({
-      type:'DEL_ALARM_SOURCE',
-      RuleListDataAdded:state.MonitorItemData
-    })
-    return Promise.resolve()
+    console.log(payload.amount)
+    Vue.http.post('/api/v1/system/confirm',{},{params:payload.amount}).
+    then(
+      (res)=>{
+          store.dispatch('GET_ALARM_SOURCE_AC')
+      }
+    )
+    // commit({
+    //   type:'DEL_ALARM_SOURCE',
+    //   RuleListDataAdded:state.MonitorItemData
+    // })
+    // return Promise.resolve()
   },
 
   /*---------------------------------------------报警信息管理--------------------*/
@@ -273,12 +387,17 @@ const actions = {
 
     // 调用查询接口 查数据 payload.amount :ModalDetailsData
     console.log(payload.amount)
-
-    commit({
-      type:'DETAILS_ALARM',
-      ModalDetailsData:state.ModalDetailsData
-    })
-    return Promise.resolve()
+    Vue.http.get("/api/v1/alarm/detail?id="+payload.amount)
+    .then(
+       (res)=>{
+          commit({
+            type:'DETAILS_ALARM',
+            ModalDetailsData:res.data
+          })
+       }
+      )
+    
+    // return Promise.resolve()
 
   },
 
@@ -287,12 +406,17 @@ const actions = {
 
     // 调用查询接口 查数据 payload.amount :ModalHistoryData
     console.log(payload.amount)
-
-    commit({
-      type:'HISTORY_ALARM',
-      ModalHistoryData:state.ModalHistoryData
-    })
-    return Promise.resolve()
+    Vue.http.get("/api/v1/alarm/history/search",{params:payload.amount})
+    .then(
+      (res) =>{
+        commit({
+         type:'HISTORY_ALARM',
+         ModalHistoryData:res.data
+        })
+      }
+    )
+    
+    // return Promise.resolve()
 
   },
   // 告警恢复
@@ -301,7 +425,13 @@ const actions = {
     // 调用接口 恢复  payload.amount 
     // 调用查询接口 查数据  :AlarmData
      console.log(payload.amount)
-
+    Vue.http.post('/api/v1/alarm/recover',{},{params:payload.amount}).then(
+      (res)=>{
+        
+          store.dispatch('GET_ALARM_AC')
+        
+      }
+    )
     commit({
       type:'RESTORE_ALARM',
       AlarmData:state.AlarmData

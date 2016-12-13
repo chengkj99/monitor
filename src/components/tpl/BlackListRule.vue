@@ -18,8 +18,8 @@
           <th>监控节点</th>
           <th>监控子节点</th>
           <th>监控项名称</th>
-          <th>告警开始时间</th>
-          <th>告警截止时间</th>
+          <th>加黑开始时间</th>
+          <th>加黑结束时间</th>
           <th>加黑原因</th>
           <th>操作</th>
         </tr>
@@ -63,7 +63,7 @@
           <td>{{ v.Period }}</td>
           <td>{{ v.Value }}</td>
           <td>
-            <a class="button is-small" @click="deleteHandle" :data-id="v.Id">删除</a>
+            <a class="button is-small" @click="deleteHandle" :data-system-name="v.SystemName" :data-metric="v.Metric" :data-type="v.Type" >删除</a>
           </td>
         </tr>
         </tbody>
@@ -99,8 +99,6 @@ import AddBacklist from './AddBacklist'
     data () {
       return {
         modalAddShow:false,
-        
-        
         sysName:'',
         renameId:''
       }
@@ -108,21 +106,41 @@ import AddBacklist from './AddBacklist'
     methods: {
     
       deleteHandle (e) {
+
+        let isConfirm = confirm()
+        if (!isConfirm){
+          return
+        }
         let itemId=e.target.dataset.id; 
         
         //通过componentName判定派发哪个actions
         //黑名单 还是事件规则
-        
-        this.$store.dispatch({
-          type:'DEL_BACK_LIST_AC',
-          amount:itemId
-        })
-        alert('删除'+itemId)
+        if (this.componentName =='黑名单'){
+          this.$store.dispatch({
+            type:'DEL_BACK_LIST_AC',
+            amount:{
+              id:itemId
+            }
+
+          })
+        }else{
+          let systemName = e.target.dataset.systemName
+          let metric = e.target.dataset.metric
+          let type = e.target.dataset.type
+          this.$store.dispatch({
+            type:'DEL_RULE_LIST_AC',
+            amount:{
+              systemName:systemName,
+              metric:metric,
+              type:type
+            }
+          })
+        }
       },
-      confirmHandle (e) {
-        let itemId=e.target.dataset.id; 
-        alert('确认'+itemId)
-      },
+      // confirmHandle (e) {
+      //   let itemId=e.target.dataset.id; 
+      //   alert('确认'+itemId)
+      // },
       modalChange (e) {
        var _this=e.target;
        this.sysName=_this.dataset.sysName;
@@ -131,15 +149,18 @@ import AddBacklist from './AddBacklist'
         this.$store.dispatch('RENAME_CHANGE_AC')
       },
       addMonitor () {
-        if(this.modalAddShow==false){
-          this.modalAddShow=true
-        }else{
-          this.modalAddShow=false
-        }
+        // if(this.modalAddShow==false){
+        //   this.modalAddShow=true
+        // }else{
+        //   this.modalAddShow=false
+        // }
+        this.$store.dispatch('ADD_RULE_SHOW_AC')
       }
     },
     computed: {
-     
+     modalAddShow(){
+       return this.$store.state.modalAddShow
+     }
     },
     filters: {
       ConfirmState (val) {

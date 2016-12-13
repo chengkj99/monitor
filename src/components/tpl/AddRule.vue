@@ -28,7 +28,7 @@
             <span class="select" >
               <select v-model="metricName">
                 <option v-for="val in selectMetricName" >
-                  {{val}}
+                  {{val.MetricName}}
                 </option>
               </select>
             </span>
@@ -168,12 +168,24 @@
         },    
         upgradeLevel: function (val,oldVal) {
           console.log('upgradeLevel:::new: %s, old: %s', val, oldVal)
+        },
+         systemName(val){
+          this.$http.get('/api/v1/metric/search?systemName='+val).then((res) => {
+          this.selectMetricName=res.data;
+         })
         }
       },
       computed:{
         levelSelectUpCom () {
           
+        },
+        selectSysName(){
+          return this.$store.state.SystemNameData
         }
+      },
+      mounted(){
+        //获取所有来源系统
+        this.$store.dispatch('GET_SYSTEM_NAME_AC')
       },
       methods:{
         modalChange () {
@@ -183,7 +195,7 @@
         
           let newPeriodData=Number(this.periodData.split('h')[0])*3600;
           this.$store.dispatch({
-            type:'ADD_BACK_LIST_AC',
+            type:'ADD_RULE_LIST_AC',
             amount:{
               SystemName:this.systemName,
               Metric:this.metricName,
@@ -193,14 +205,14 @@
               TargetLevel: this.upgradeLevel
             }
           })
-          alert('保存'+this.systemName+'--'
-          +this.metricName+'---'
-          +this.typePicked+''+'---'
-          +this.periodData+''+'---'
-          +this.value+''+'---'
-          +this.originalLevel+''+'---'
-          +this.upgradeLevel+''+'---' 
-          )
+          // alert('保存'+this.systemName+'--'
+          // +this.metricName+'---'
+          // +this.typePicked+''+'---'
+          // +this.periodData+''+'---'
+          // +this.value+''+'---'
+          // +this.originalLevel+''+'---'
+          // +this.upgradeLevel+''+'---' 
+          // )
         },
         resetHandle () {
           this.systemName='';

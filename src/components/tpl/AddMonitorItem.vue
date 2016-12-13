@@ -65,9 +65,18 @@
           metricName:'',
           alarmContent:'',
           
-          selectData:this.$store.state.SystemNameData
+          selectData:this.$store.state.AlarmSourceData
         }
       },
+      mounted(){
+        this.$store.dispatch('GET_ALARM_SOURCE_AC')
+      },
+      computed:{
+        selectData(){
+          return this.$store.state.AlarmSourceData
+        }
+      },
+    
       methods:{
         modalChange () {
           this.$emit('modalChange')       

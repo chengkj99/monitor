@@ -71,7 +71,7 @@
           <td>{{ obj.LastReportTime }}</td>
           <td>{{ obj.FirstReportTime }}</td>
           <td>
-            <a class="button is-small" @click="historyHandle"  :data-id="obj.Id">查看历史</a>
+            <a class="button is-small" @click="historyHandle"  :data-sytem-name="obj.SystemName" data-metric="obj.Metric" data-endpoint="obj.Endpoint" :data-sub-endpoint="obj.SubEndpoint">查看历史</a>
             <a class="button is-small" @click="detailsHandle"  :data-id="obj.Id">详情</a>
             <router-link class="button is-small" to="/Blacklist">黑名单</router-link>
             <a class="button is-small" @click="restoreHandle" :data-id="obj.Id">恢复</a>
@@ -169,10 +169,21 @@ import ModalDetails from './tpl/ModalDetails'
     },
     historyHandle (e) {     
       let aimID=e.target.dataset.id
+      
+      let SystemName = e.target.dataset.sytemName
+      let Metric = e.target.dataset.metric
+      let Endpoint = e.target.dataset.endpoint
+      let SubEndpoint = e.target.dataset.subEndpoint
+      let params = {
+        SystemName:SystemName,
+        Metric:Metric,
+        Endpoint:Endpoint,
+        SubEndpoint:SubEndpoint
+      }
       this.$store.dispatch('MODAL_CHANGE_AC')
       this.$store.dispatch({
         type:'HISTORY_ALARM_AC',
-        amount:aimID
+        amount:params
       })
     },
     detailsHandle (e) {
@@ -187,7 +198,9 @@ import ModalDetails from './tpl/ModalDetails'
       let aimID=e.target.dataset.id
       this.$store.dispatch({
         type:'RESTORE_ALARM_AC',
-        amount:aimID
+        amount:{
+          id:aimID
+        }
       })
     },
     

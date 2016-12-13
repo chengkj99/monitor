@@ -76,13 +76,6 @@
         }
       },
       methods:{
-        getMessage () {
-          let msg;
-          if(this.message='chengkangjian'){
-            msg='KANGJIANCHENG';
-          }
-          return msg;
-        },
         modalChange () {
           this.$store.dispatch('RENAME_CHANGE_AC')         
         },
@@ -90,16 +83,62 @@
           this.newName='';
         },
         saveHandle (e) {
-        
-        this.$store.dispatch({
-          type:'UPDATE_MONITOR_ITEM_AC',
-          amount:{
-          systemName:this.sysName,
-          nameOld:this.metricName,
-          nameNew:this.newName
+
+          if(this.newName =''){
+              alert('新的来源系统名称为空')
+              return
           }
-        })
-          alert("保存:"+this.metricName+'//'+this.sysName+"//"+this.renameId+"//"+this.newName)
+            //提示是否继续rename
+           let isConfirm = confirm("确定要将"+this.oldName+"替换为:"+this.newName+"?系统将同时更新告警历史、快照以及黑名单告警规则中的系统来源名称为您输入的新的名称")
+           if (!isConfirm){
+             return
+           }
+           //校验systemName是否存在
+           this.$store.dispatch({
+              type:'EXIST_ALARM_SOURCE_AC',
+              amount:{
+                  systemName:this.newName
+              }
+           }).then(
+
+             (res)=>{
+                if (res.data.code ==400001){
+                  alert("suc 已经存在systemname")
+                }
+             },
+             (res)=>{
+                if (res.data.code ==400001){
+                  let isContinue = confirm("警告！您输入的新的系统来源名称已经存在，确定继续更新？继续将会更新告警历史、快照以及黑名单告警规则中的系统来源名称为您输入的新的名称，并同时删除旧的来源系统名称")
+                  if (!isContinue){
+                    return 
+                  }
+                }
+             }
+           ).then(
+              () => {
+                if(this.componentName=='告警来源系统'){
+                  this.$store.dispatch({
+                      type:'RENAME_ALARM_SOURCE_AC',
+                      amount:{
+                        nameOld:this.oldName,
+                        nameNew:this.newName
+                      }
+                  })
+                }else{
+                  this.$store.dispatch({
+                      type:'UPDATE_MONITOR_ITEM_AC',
+                      amount:{
+                        systemName:this.sysName,
+                        nameOld:this.oldName,
+                        nameNew:this.newName
+                      }
+                  })
+                }
+              }
+           )
+
+           
+              
         }
       }
     }

@@ -163,7 +163,7 @@ const mutations = {
   },  
   //来源系统历史数据
   HISTORY_ALARM (state,payload) {
-    state.ModalDetailsData=payload.ModalDetailsData
+    state.ModalHistoryData=payload.ModalHistoryData
   },
   //告警恢复
   RESTORE_ALARM (state,payload) {
