@@ -134,14 +134,14 @@
           metricName:'', //监控项名称
           typePicked:'1', //选择类型
           periodData:'',
-          originalLevel:'1',
-          upgradeLevel:'3',
-          value:0,
+          originalLevel:1,
+          upgradeLevel:3,
+          value:'',
           
           valueState:true,
 
-          levelSelect:['1','3','5','7'], 
-          levelSelectUp:['3','5','7'],
+          levelSelect:[1,2,5,7], 
+          levelSelectUp:[3,5,7],
           PeriodSelect:['1h','2h','3h','4h','5h','6h','7h','8h','9h','10h',
           '11h','12h','13h','14h','15h','16h','17h','18h','19h','20h','21h',
           '22h','23h','24h'],
@@ -191,18 +191,67 @@
         modalChange () {
           this.$emit('modalChange')       
         },
+        //判断字符串是否为空
+        isEmpty(val){
+          if (val == ''){
+            return true
+          }
+          return false
+        },
+        //判断等级是否合法
+        isLevelCorrect(val){
+          let level
+          for(level in this.levelSelect){
+            console.log(level)
+            if(val == level){
+              return true
+            }
+          }
+          return false
+        },
         saveHandle (e) {
-        
+          
+          
+          
+          if(this.isEmpty(this.systemName)){
+            alert('来源系统不能为空')
+            return
+          }
+          if(this.isEmpty(this.metricName)){
+            alert('监控项不能为空')
+            return
+          }
+          if(this.typePicked != 2){
+            if(this.isEmpty(this.periodData)){
+              alert('时间段不能为空')
+            }
+          }
+          if(this.typePicked !=1){
+            if(this.isEmpty(this.Value)){
+              alert('数值不能为空')
+              var numPat = new RegExp('^[0-9]+\.{0,1}[0-9]{0,2}$')
+              if (!numPat.test(this.value)){
+                alert("必须输入数字")
+              }
+            }
+          }
+          // alert(this.upgradeLevel)
+          // if(!this.isLevelCorrect(this.upgradeLevel)){
+          //   alert('等级配置错误')
+          //   return
+          // }
+         
+          //type1：按持续时间，2：按持续次数3：按时间段内次数4：按时间段内比值
           let newPeriodData=Number(this.periodData.split('h')[0])*3600;
           this.$store.dispatch({
             type:'ADD_RULE_LIST_AC',
             amount:{
               SystemName:this.systemName,
               Metric:this.metricName,
-              Type: this.typePicked, 
-              Period: newPeriodData,  
-              Value: this.value, 
-              TargetLevel: this.upgradeLevel
+              Type: Number(this.typePicked), 
+              Period: Number(newPeriodData),  
+              Value: this.value,
+              TargetLevel:parseInt(this.upgradeLevel)
             }
           })
           // alert('保存'+this.systemName+'--'
@@ -220,8 +269,8 @@
           this.typePicked='1';
           this.periodData='';
           this.originalLevel='';
-          this.upgradeLevel='';
-          this.value=''
+         this.upgradeLevel=null;
+          this.value='';
         },
         checkNumber () {
           let regTextNumber = /^(\d)*$/;   

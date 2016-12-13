@@ -51,6 +51,7 @@
           <th>升级类型</th>
           <th>时间段</th>
           <th>数值</th>
+          <th>要升到的等级</th>
           <th>操作</th>
         </tr>
         </thead>
@@ -59,9 +60,10 @@
         <tr v-for="v in listData">
           <td>{{ v.SystemName }}</td>
           <td>{{ v.Metric }}</td>
-          <td>{{ v.Type }}</td>
+          <td>{{ v.Type | changeUpgradeType}}</td>
           <td>{{ v.Period }}</td>
           <td>{{ v.Value }}</td>
+          <td>{{ v.TargetLevel}}</td>
           <td>
             <a class="button is-small" @click="deleteHandle" :data-system-name="v.SystemName" :data-metric="v.Metric" :data-type="v.Type" >删除</a>
           </td>
@@ -103,6 +105,7 @@ import AddBacklist from './AddBacklist'
         renameId:''
       }
     },
+   
     methods: {
     
       deleteHandle (e) {
@@ -171,8 +174,21 @@ import AddBacklist from './AddBacklist'
           value='已确认'
         }
         return value;
+      },
+      changeUpgradeType(val){
+        switch(val){
+          case 1:
+            return '按时间'
+          case 2:
+             return'按次数'
+          case 3:
+             return '按时间段内次数'
+          case 4:
+            return '按时间段内比值'
+        }
       }
     },
+
     components:{
       AddRule,
       AddBacklist
