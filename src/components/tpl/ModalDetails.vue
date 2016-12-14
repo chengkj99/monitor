@@ -4,7 +4,7 @@
 
         <h1 class="title">告警详情</h1>
 
-        <template v-for=" obj in details">
+        <template>
           <div>
             <label class="label">标题:</label>
             <p class="control">
@@ -83,11 +83,14 @@
            marginTop:(window.innerHeight-770)/2+"px",
            height:"770px"
           },
-          details:this.$store.state.ModalDetailsData
+          obj:{}
         }
       },
       computed: {
-
+        obj(){
+            console.log('detail log:',this.$store.state.ModalDetailsData)
+          return this.$store.state.ModalDetailsData
+        }
       },
       methods:{
         modalChange () {

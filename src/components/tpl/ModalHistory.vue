@@ -47,12 +47,17 @@
          tableBoxStyle:{
           marginTop:(window.innerHeight-800)/2+"px"
          },
-         details: this.$store.state.ModalHistoryData
+         details: []
          
          }
        },
        computed: {
-
+         details(){
+           return this.$store.state.ModalHistoryData
+         }
+       },
+       mounted(){
+          console.log("history log:",this.$store.state.ModalHistoryData)
        },
        methods:{
          modalChange () {

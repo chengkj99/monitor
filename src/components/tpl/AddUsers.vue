@@ -79,8 +79,10 @@
           Phone:'',
           
           GroupName:'',
-          Describe:''
-          
+          Describe:'',
+          //电话正则
+          phPat : /^1[34578]\d{9}$/,
+          mailPat: /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
         }
       },
       watch:{
@@ -99,7 +101,20 @@
         saveHandle (e) {
           
           if(this.componentName=='用户'){
-          
+            
+            if(this.Name == '' || this.Mail == '' || this.Phone == ''){
+              alert('各项输入不能为空')
+              return
+            }
+            if(!this.mailPat.test(this.Mail)){
+              alert('邮箱输入有误')
+              return 
+            }
+            if(!this.phPat.test(this.Phone)){
+              alert('电话号码输入有误')
+              return 
+            }
+           
             this.$store.dispatch({
               type:'ADD_USER_AC',
               amount:{
@@ -114,7 +129,10 @@
             })
             
           }else{
-          
+            if(this.GroupName== ''){
+              alert('用户组名称不能为空！')
+              return
+            }
             this.$store.dispatch({
               type:'ADD_USER_GROUP_AC',
               amount:{

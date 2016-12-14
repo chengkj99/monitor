@@ -76,33 +76,130 @@
         }
       },
       methods:{
-        getMessage () {
-          let msg;
-          if(this.message='chengkangjian'){
-            msg='KANGJIANCHENG';
-          }
-          return msg;
-        },
         modalChange () {
           this.$store.dispatch('RENAME_CHANGE_AC')         
         },
         resetHandle () {
           this.newName='';
         },
-        saveHandle (e) {
-        
-        this.$store.dispatch({
-          type:'UPDATE_MONITOR_ITEM_AC',
-          amount:{
-          systemName:this.sysName,
-          nameOld:this.metricName,
-          nameNew:this.newName
+
+        //来源系统
+        handleSys(e){
+          console.log('this.newName1',this.newName)
+             if(this.newName ==''){
+              alert('新的来源系统名称为空是不对的')
+              return
+            }
+            if (this.oldName == this.newName){
+              alert('新旧名称不能相同')
+              return
+            }
+            //提示是否继续rename
+           let isConfirm = confirm("确定要将"+this.oldName+"替换为:"+this.newName+"?系统将同时更新告警历史、快照以及黑名单告警规则中的系统来源名称为您输入的新的名称")
+           if (!isConfirm){
+             return
+           }
+           console.log('this.newName2',this.newName)
+                //校验systemName是否存在
+           this.$store.dispatch({
+                      type:'EXIST_ALARM_SOURCE_AC',
+                      amount:{
+                          systemName:this.newName
+                      }
+             }).then(
+             (res)=>{
+                  if (res.data.code ==400001){
+                   alert("suc 已经存在systemname")
+                  }
+             },
+             (res)=>{
+               if (res.data.code ==400001){
+                   let isContinue = confirm("警告！您输入的新的系统来源名称已经存在，确定继续更新？继续将会更新告警历史、快照以及黑名单告警规则中的系统来源名称为您输入的新的名称，并同时删除旧的来源系统名称")
+                    if (!isContinue){
+                return 
+                }
+               }
           }
-        })
-          alert("保存:"+this.metricName+'//'+this.sysName+"//"+this.renameId+"//"+this.newName)
+           ).then(
+              () => {
+                if(this.componentName=='告警来源系统'){
+                  this.$store.dispatch({
+                      type:'RENAME_ALARM_SOURCE_AC',
+                      amount:{
+                        nameOld:this.oldName,
+                        nameNew:this.newName
+                      }
+                  })
+                }else{
+                  this.$store.dispatch({
+                      type:'UPDATE_MONITOR_ITEM_AC',
+                      amount:{
+                        systemName:this.sysName,
+                        nameOld:this.oldName,
+                        nameNew:this.newName
+                      }
+                  })
+                }
+              }
+           )
+        },
+        handleMetric(){
+           if(this.newName ==''){
+              alert('新的来源系统名称为空是不对的')
+              return
+            }
+            if (this.oldName == this.newName){
+              alert('新旧名称不能相同')
+              return
+            }
+            //提示是否继续rename
+           let isConfirm = confirm("确定要将"+this.oldName+"替换为:"+this.newName+"?系统将同时更新告警历史、快照以及黑名单告警规则中的监控项名称为您输入的新的名称")
+           if (!isConfirm){
+             return
+           }
+              //校验systemName是否存在
+                  this.$store.dispatch({
+                      type:'EXIST_MONITOR_ITEM_AC',
+                      amount:{
+                          systemName:this.sysName,
+                          metricName:this.newName
+                      }
+                  }).then(
+                    (res)=>{
+                        
+                    },
+                    (res)=>{
+                        if (res.data.code ==400001){
+                          let isContinue = confirm("警告！您输入的新的监控项名称已经存在，确定继续更新？继续将会更新告警历史、快照以及黑名单告警规则中的监控项名称为您输入的新的名称，并同时删除旧的监控项名称")
+                          if (!isContinue){
+                            return 
+                          }
+                        }
+                    }
+           ).then(
+              () => {
+                  this.$store.dispatch({
+                      type:'RENAME_MONITOR_ITEM_AC',
+                      amount:{
+                        systemName:this.sysName,
+                        nameOld:this.oldName,
+                        nameNew:this.newName
+                      }
+                  })
+              }
+           )
+        },
+        saveHandle (e) {
+          if(this.componentName=='告警来源系统'){
+            this.handleSys(e)
+          }else{
+            this.handleMetric(e)
+          }
+         
         }
       }
     }
+    
 </script>
 
 <style lang="scss">

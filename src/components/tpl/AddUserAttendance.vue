@@ -12,7 +12,7 @@
           <p class="control">
             <span class="select" >
               <select v-model="GroupName" @blur="groupSelectBlurHandle">
-                <option v-for="val in UserGroupData"  :mark="val.GroupId">
+                <option v-for="val in UserGroupData"  :mark="val.Id">
                   {{val.Name}}
                 </option>
               </select>
@@ -97,32 +97,67 @@
         }
       },
       watch:{
-
+       GroupName(val){
+          this.$http.get('/api/v1/usergroup/usersgname?groupName='+val).then((res) => {
+          this.UserData=res.data;
+         }, 
+         (res) => {
+          console.log('error res:::'+res)
+         });  
+       }
       },
       computed:{
         UserGroupData () {
           return this.$store.state.UserGroupData;
         },            
-        UserData () {
-          return this.$store.state.UserData;
-        }
+        // UserData () {
+        //   return this.$store.state.UserData;
+        // }
+      },
+      mounted(){
+        this.$store.dispatch('GET_USER_GROUP_AC')
       },
       methods:{
         modalChange () {
           this.$store.dispatch('ADD_USER_ATTENDANCE_CHANGE_AC')
         },
         saveHandle () {
-          
+          /**
+          校验数据非空
+          **/
+          if(this.GroupName == ''){
+            alert('小组名称不能为空！')
+            return
+          }
+          if(this.dateTime == ''){
+            alert('值班时间不能为空')
+            return
+          }
+          if(this.Duty == ''){
+            alert('责任人不能为空')
+            return
+          }
+          if(this.Backup == ''){
+            alert('第二责任人不能为空')
+            return
+          }
+          if (this.Charge == ''){
+            alert('负责人不能为空')
+            return
+          }
+
           this.$store.dispatch({
-            type:'ADD_USER_MONITOR_RELATION_AC',
+            type:'ADD_USER_ATTENDANCE_AC',
             amount:{
               GroupName:this.GroupName,
-              Date:this.Date,
+              Date:this.dateTime,
               Duty:this.Duty,
               Backup:this.Backup,
               Charge:this.Charge,
             }
-          })
+          }).then(
+            (res)=>{ this.$store.dispatch('ADD_USER_ATTENDANCE_CHANGE_AC')}
+          )
         },
         resetHandle () {
           this.Name='';
