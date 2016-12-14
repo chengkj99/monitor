@@ -168,8 +168,7 @@ import UsersUpdate from './UsersUpdate'
         this.Phone=_this.dataset.phone;
         this.GroupName=_this.dataset.group;
         this.Describe=_this.dataset.describe;
-        console.log('user:'+this.Name+'//'+this.Mail+'//'+this.Phone)
-        console.log('userGroup:'+'//'+this.GroupName+'//'+this.Describe)
+       
         
        this.$store.dispatch('USER_UPDATE_CHANGE_AC')
          

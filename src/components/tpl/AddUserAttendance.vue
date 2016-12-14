@@ -122,7 +122,30 @@
           this.$store.dispatch('ADD_USER_ATTENDANCE_CHANGE_AC')
         },
         saveHandle () {
-          
+          /**
+          校验数据非空
+          **/
+          if(this.GroupName == ''){
+            alert('小组名称不能为空！')
+            return
+          }
+          if(this.dateTime == ''){
+            alert('值班时间不能为空')
+            return
+          }
+          if(this.Duty == ''){
+            alert('责任人不能为空')
+            return
+          }
+          if(this.Backup == ''){
+            alert('第二责任人不能为空')
+            return
+          }
+          if (this.Charge == ''){
+            alert('负责人不能为空')
+            return
+          }
+
           this.$store.dispatch({
             type:'ADD_USER_ATTENDANCE_AC',
             amount:{

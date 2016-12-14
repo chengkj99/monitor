@@ -114,11 +114,18 @@ import Multiselect from 'vue-multiselect'
         saveHandle () {
          
           let UserIdArr=[]
+          if(!this.selectedData){
+            alert("您未选择任何用户")
+            return
+          }
           this.selectedData.map( (it) => {
             let userId = Number(it.split('#')[1])
             UserIdArr.push(userId)
           })
-          
+          if(UserIdArr.length == 0){
+            alert('您未选择任何用户')
+            return
+          }
           this.$store.dispatch({
             type:'ADD_USER_RELATION_AC',
             amount:{
