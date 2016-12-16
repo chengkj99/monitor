@@ -71,9 +71,10 @@
           <td>{{ obj.LastReportTime }}</td>
           <td>{{ obj.FirstReportTime }}</td>
           <td>
-            <a class="button is-small" @click="historyHandle"  :data-sytem-name="obj.SystemName" data-metric="obj.Metric" data-endpoint="obj.Endpoint" :data-sub-endpoint="obj.SubEndpoint">查看历史</a>
+            <a class="button is-small" @click="historyHandle"  :data-sytem-name="obj.SystemName" :data-metric="obj.Metric" :data-endpoint="obj.Endpoint" :data-sub-endpoint="obj.SubEndpoint">查看历史</a>
             <a class="button is-small" @click="detailsHandle"  :data-id="obj.Id">详情</a>
-            <router-link class="button is-small" to="/Blacklist">黑名单</router-link>
+            <!--<router-link class="button is-small" to="/Blacklist">黑名单</router-link>-->
+            <a class="button is-small" @click="addBlacklist" :data-system-name="obj.SystemName" :data-metric="obj.Metric" :data-endpoint="obj.Endpoint" :data-sub-endpoint="obj.SubEndpoint">加黑</a>
             <a class="button is-small" @click="restoreHandle" :data-id="obj.Id">恢复</a>
           </td>
         </tr>
@@ -91,6 +92,16 @@
       <div v-show="modalDetailsShow">
         <ModalDetails></ModalDetails>
       </div>
+       <template v-if="blackshow">
+          <AddBacklistForAlarm
+            :SystemName="sysName" 
+            :MetricName="metricName" 
+            :Endpoint="endpoint"
+           :SubEndpoint="subEndpoint" 
+           v-on:modalChange="showAddBlacklist">
+           </AddBacklistForAlarm>
+       </template>
+      
     </div>
 
 </template>
@@ -99,16 +110,21 @@
 <script>
 import ModalHistory from './tpl/ModalHistory'
 import ModalDetails from './tpl/ModalDetails'
+import AddBacklistForAlarm from './tpl/AddBacklistForAlarm'
   export default {
   data () {
     return {
       name: 'alarm-node',
       selectSysName:[],
       selectMetric:[],
-      
+      blackshow:false,
+
       sysName:'',
       endpoint:'',
       metricName:'',
+      subEndpoint:'',
+
+
       
       page: 1, //page,pageSize: 10 
       pageSize:10, // default is 10
@@ -153,6 +169,24 @@ import ModalDetails from './tpl/ModalDetails'
     })
   },
   methods: {
+    addBlacklist(e){
+      this.sysName = e.target.dataset.systemName
+      this.metricName = e.target.dataset.metric
+      this.endpoint = e.target.dataset.endpoint
+      this.SubEndpoint = e.target.dataset.subEndpoint
+      console.log(this.sysName)
+      console.log(this.metricName)
+      console.log(this.endpoint)
+      console.log(this.SubEndpoint)
+      this.showAddBlacklist()
+    },
+    showAddBlacklist(){
+      if(!this.blackshow){
+        this.blackshow = true
+      }else{
+        this.blackshow= false
+      }
+    },
     queryHandle (e) {
       this.$store.dispatch({
         type:'QUERY_ALARM_AC',
@@ -228,7 +262,8 @@ import ModalDetails from './tpl/ModalDetails'
   },
   components:{
     ModalHistory,
-    ModalDetails    
+    ModalDetails,
+    AddBacklistForAlarm  
    }
 }
 </script>
