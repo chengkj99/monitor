@@ -12,8 +12,8 @@
             <p class="control">
             <span class="select" >
               <select v-model="GroupMonitorName" @blur="groupSelectBlurHandle">
-                <option v-for="val in UserMonitorRelationData"  :mark="val.GroupId">
-                  {{val.GroupName}}
+                <option v-for="val in UserGroupData"  :mark="val.Id">
+                  {{val.Name}}
                 </option>
               </select>
             </span>
@@ -34,12 +34,19 @@
           <div>
             <label class="label">监控项名称＊</label>
             <p class="control">
-            <span class="select" >
-              <select v-model="MonitorName">
+            <span>
+              <!--<select v-model="MonitorName">
                 <option v-for="val in SystemNameData" :data-groupId="val.Id" :mark="val.Id">
                   {{val.SystemName}}
                 </option>
-              </select>
+              </select>-->
+              <ul id="metrics">
+                  <li><input type="button" @click='selAll'  value="全选"/> <input type="button" @click='disSel'  value="取消全选"/></li>
+                  <li v-for="metric in metrics">
+                    <input type='checkbox' :value="metric.MetricName" v-model="pickedMetrics"/>
+                    {{metric.MetricName}}
+                 </li>
+              </ul>
             </span>
             </p>
           </div>
@@ -62,17 +69,20 @@
         return{
         
           tableBoxStyle:{
-           marginTop:(window.innerHeight-375)/2+"px",
-           height:"375px"
+           marginTop:(window.innerHeight-600)/2+"px",
+           height:"600px"
           },          
           tableBoxStyleTwo:{
            marginTop:(window.innerHeight-385)/2+"px",
            height:"385px"
           },
-          UserRelationData:this.$store.state.UserRelationData,
+          // UserRelationData:this.$store.state.UserRelationData,
           
-          UserMonitorRelationData:'',
-          SystemNameData:'',
+          // UserMonitorRelationData:'',
+          //用户组列表
+          UserGroupData:this.$store.state.UserGroupData,
+          //来源系统列表
+          SystemNameData:this.$store.state.SystemNameData,
           
           
           SystemName:'',
@@ -81,10 +91,16 @@
           
           GroupId:'',
           Id:'',
+          metrics:[],
+          pickedMetrics:[]
         }
       },
       watch:{
-
+        SystemName(val){
+           this.$http.get('/api/v1/metric/search?systemName='+val).then((res) => {
+           this.metrics=res.data;
+         })
+        }
       },
       computed:{
         UserMonitorRelationData () {
@@ -92,8 +108,19 @@
         },      
         SystemNameData () {
           return this.$store.state.SystemNameData;
+        },
+        UserGroupData(){
+          return this.$store.state.UserGroupData;
         }
       },
+      mounted(){
+        //获取来源系统名称
+        this.$store.dispatch('GET_SYSTEM_NAME_AC')
+        //获取所有小组
+        this.$store.dispatch('GET_USER_GROUP_AC')
+
+      },
+     
       methods:{
         modalChange () {
           this.$store.dispatch('ADD_MONITOR_RELATE_CHANGE_AC')
@@ -103,11 +130,18 @@
           this.$store.dispatch({
             type:'ADD_USER_MONITOR_RELATION_AC',
             amount:{
-              GroupId:this.GroupId,
+              GroupId:Number(this.GroupId),
               SystemName:this.SystemName,
-              metric:this.MonitorName
+              Metrics:this.pickedMetrics
             }
-          })
+          }).then(
+            (res)=>{
+
+            },
+            (res)=>{
+              alert('保存失败，请检查要保存的监控项是否已存在')
+            }
+          )
         },
         resetHandle () {
           this.Name='';
@@ -120,6 +154,16 @@
           let groupId=_this.options[targetIndex].getAttribute('mark')
            this.GroupId=groupId
            console.log(this.GroupId)
+        },
+        //选中所有的监控项
+        selAll(){
+          this.metrics.map((val,index)=>{
+            this.pickedMetrics.push(val.MetricName)
+          })      
+        },
+        //取消全选
+        disSel(){
+          this.pickedMetrics=[]
         }
       }
     }

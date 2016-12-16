@@ -645,8 +645,8 @@ const UserAttendanceData=[
   }
 ]
 
-
-
+//监控项
+let metrics =[]
 
 const State = {
   modalShow: false,
@@ -677,7 +677,8 @@ const State = {
   UserGroupData:UserGroupData,
   UserRelationData:UserRelationData,
   UserMonitorRelationData:UserMonitorRelationData,
-  UserAttendanceData:UserAttendanceData
+  UserAttendanceData:UserAttendanceData,
+  metrics:metrics,
 
 }
 

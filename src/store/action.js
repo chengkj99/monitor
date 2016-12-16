@@ -680,18 +680,29 @@ const actions = {
       })
     })
   },
+  //创建小组关注的监控项
   ADD_USER_MONITOR_RELATION_AC ({ commit },payload) {
 
     // 调用添加用户组监控项关系接口 payload.amount  :UserMonitorRelationDataAdd
     console.log(payload.amount)
 
-    commit({
-      type:'ADD_USER_MONITOR_RELATION',
-      UserMonitorRelationDataAdd:payload.amount
-    })
+    // commit({
+    //   type:'ADD_USER_MONITOR_RELATION',
+    //   UserMonitorRelationDataAdd:payload.amount
+    // })
     return new Promise(
       (resolve,reject)=>{
-        Vue.http.post("/api/v1/")
+        Vue.http.post("/api/v1/groupmetric/batchadd",payload.amount).then(
+          (res)=>{
+            store.dispatch('GET_USER_MONITOR_RELATION_AC')
+            store.dispatch('ADD_MONITOR_RELATE_CHANGE_AC')
+
+          },
+          (res)=>{
+            reject(res)
+          }
+          
+        )
       }
     )
   },
@@ -700,10 +711,15 @@ const actions = {
     // 调用删除用户组监控项关系数据接口 payload.amount  
     //查询更新数据 :UserMonitorRelationData
     console.log(payload.amount)
-    commit({
-      type:'DEL_USER_MONITOR_RELATION',
-      UserMonitorRelationData:state.UserMonitorRelationData
-    })
+    Vue.http.post('/api/v1/groupmetric/del',{},{params:payload.amount}).then(
+      (res)=>{
+        store.dispatch('GET_USER_MONITOR_RELATION_AC')
+      }
+    )
+    // commit({
+    //   type:'DEL_USER_MONITOR_RELATION',
+    //   UserMonitorRelationData:state.UserMonitorRelationData
+    // })
     return Promise.resolve()
 
   },
