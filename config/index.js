@@ -25,7 +25,7 @@ module.exports = {
       // proxy set up from Cheng
       '/api': {
         // target: 'http://192.168.92.92:8080',
-        target:'http://127.0.0.1:8081',
+        target:'http://115.236.16.115:8081',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
